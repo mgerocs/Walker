@@ -9,7 +9,14 @@ public class Chest : MonoBehaviour, IInteractable
 
     public bool Interact(Interactor interactor)
     {
-        Debug.Log("Opening Chest!");
+        var inventory = interactor.GetComponent<Inventory>();
+
+        if (inventory == null) return false;
+
+        if (!inventory.hasKey) return false;
+
+        Debug.Log("Opening Chest");
+
         return true;
     }
 }
