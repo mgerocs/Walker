@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public interface IInteractable
 {
     public string InteractionPrompt { get; }

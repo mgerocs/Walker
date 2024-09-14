@@ -21,8 +21,15 @@ public class Interactor : MonoBehaviour
         {
             _interactable = _colliders[0].GetComponent<IInteractable>();
 
+
+
             if (_interactable != null)
             {
+
+                // cast to parent and call HighlightObject()
+                Interactable interactable = _interactable as Interactable;
+                interactable.HighlightObject();
+
                 if (!_interactionPromptUI.isDisplayed)
                 {
                     _interactionPromptUI.SetUp(_interactable.InteractionPrompt);
@@ -36,7 +43,14 @@ public class Interactor : MonoBehaviour
         }
         else
         {
-            if (_interactable != null) _interactable = null;
+            if (_interactable != null)
+            {
+                // cast to parent and call HighlightObject()
+                Interactable interactable = _interactable as Interactable;
+                interactable.UnhighlightObject();
+
+                _interactable = null;
+            }
 
             if (_interactionPromptUI.isDisplayed)
             {
