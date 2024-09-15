@@ -9,110 +9,57 @@ namespace StarterAssets
 {
 	public class StarterAssetsInputs : MonoBehaviour
 	{
+		[Header("Input Reader")]
+		public InputReader inputReader;
+
 		[Header("Character Input Values")]
 		public Vector2 move;
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
+		public Vector2 rotate;
 
-		[Header("Movement Settings")]
-		public bool analogMovement;
-
-		[Header("Mouse Cursor Settings")]
-		public bool cursorLocked = true;
-		public bool cursorInputForLook = true;
-
-		[Header("Camera rotation speed")]
-		public float rotationSpeed = 100f;
-
-		public CinemachineVirtualCamera virtualCamera;
-
-		private float horizontalInput;
-
-		void Update()
+		private void OnEnable()
 		{
-			if (virtualCamera != null && horizontalInput != 0)
-			{
-
-				// Get the current Euler angles
-				Vector3 currentRotation = virtualCamera.transform.rotation.eulerAngles;
-
-				// Calculate the new Y rotation
-				float newYRotation = currentRotation.y + (horizontalInput * rotationSpeed * Time.deltaTime);
-
-				// Create a new Quaternion with the current X and Z rotation, and the updated Y rotation
-				Quaternion targetRotation = Quaternion.Euler(currentRotation.x, newYRotation, currentRotation.z);
-
-				virtualCamera.transform.rotation = targetRotation;
-			}
-
+			inputReader.SetGameplay();
 		}
 
-#if ENABLE_INPUT_SYSTEM
-		public void OnMove(InputValue value)
+		private void Start()
 		{
-			MoveInput(value.Get<Vector2>());
+			// Subscribe to InputReader events
+			inputReader.MoveEvent += HandleMove;
+
+			inputReader.JumpEvent += HandleJump;
+			inputReader.JumpCanceledEvent += HandleCanceledJump;
+
+			inputReader.ToggleSprintEvent += HandleToggleSprint;
+
+			inputReader.RotateCameraEvent += HandleRotateCamera;
 		}
 
-		public void OnLook(InputValue value)
+		private void HandleMove(Vector2 direction)
 		{
-			if (cursorInputForLook)
-			{
-				LookInput(value.Get<Vector2>());
-			}
+			move = direction;
 		}
 
-		public void OnJump(InputValue value)
+		private void HandleJump()
 		{
-			JumpInput(value.isPressed);
+			jump = true;
 		}
 
-		public void OnSprint(InputValue value)
+		private void HandleCanceledJump()
 		{
-			SprintInput(!sprint);
+			jump = false;
 		}
 
-		public void OnRotateCamera(InputValue value)
+		private void HandleToggleSprint()
 		{
-			RotateCamera(value.Get<Vector2>().x);
+			sprint = !sprint;
 		}
 
-#endif
-
-
-		public void MoveInput(Vector2 newMoveDirection)
+		private void HandleRotateCamera(Vector2 direction)
 		{
-			move = newMoveDirection;
-		}
-
-		public void LookInput(Vector2 newLookDirection)
-		{
-			look = newLookDirection;
-		}
-
-		public void JumpInput(bool newJumpState)
-		{
-			jump = newJumpState;
-		}
-
-		public void SprintInput(bool newSprintState)
-		{
-			sprint = newSprintState;
-		}
-
-		private void OnApplicationFocus(bool hasFocus)
-		{
-			SetCursorState(cursorLocked);
-		}
-
-		private void SetCursorState(bool newState)
-		{
-			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
-		}
-
-		private void RotateCamera(float newHorizontalInput)
-		{
-			horizontalInput = newHorizontalInput;
+			rotate = direction;
 		}
 	}
 

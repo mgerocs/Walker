@@ -35,10 +35,10 @@ public class Interactor : MonoBehaviour
                     _interactionPromptUI.SetUp(_interactable.InteractionPrompt);
                 }
 
-                if (Keyboard.current.fKey.wasPressedThisFrame)
+                /* if (Keyboard.current.fKey.wasPressedThisFrame)
                 {
-                    _interactable.Interact(this);
-                }
+                    _interactable.OnInteract(this);
+                } */
             }
         }
         else

@@ -1,22 +1,20 @@
 using UnityEngine;
 
-public class Door : Interactable, IInteractable
+public class Door : InteractableBase
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    [SerializeField] private string _prompt;
+   /*  [SerializeField] private string _prompt;
 
     public string InteractionPrompt => _prompt;
 
-    public bool Interact(Interactor interactor)
+    public bool HoldInteract => false;
+
+    public bool MultipleUse => true;
+
+    public bool IsInteractable => true;
+
+    public void OnInteract(Interactor interactor)
     {
-        var inventory = interactor.GetComponent<Inventory>();
-
-        if (inventory == null) return false;
-
-        if (!inventory.hasKey) return false;
-
         Debug.Log("Opening Door");
-
-        return true;
-    }
+    } */
 }

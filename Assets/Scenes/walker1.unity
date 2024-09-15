@@ -118,6 +118,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &256431796 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2070925441746177671, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
+  m_PrefabInstance: {fileID: 1402827283}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &281754982
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,7 +568,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd802ce0cf235a48a122b0d1f247810, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prompt: Open Chest
+  holdInteract: 0
+  holdDuration: 0
+  multipleUse: 0
+  isInteractable: 0
+  interactionPrompt: 
 --- !u!1 &874605735
 GameObject:
   m_ObjectHideFlags: 0
@@ -1140,7 +1149,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f33202fc76d51e64887871e14a863d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prompt: Open Door
+  holdInteract: 0
+  holdDuration: 0
+  multipleUse: 0
+  isInteractable: 0
+  interactionPrompt: 
 --- !u!1001 &1402827283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1207,6 +1220,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2070925441746177671, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1676453992}
     - targetCorrespondingSourceObject: {fileID: 2070925442191277755, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1766468008}
@@ -1343,12 +1359,26 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2070925441746177913, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
   m_PrefabInstance: {fileID: 1402827283}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 256431796}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1676453992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 256431796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f6e2fb364d08d041a741f9e46589222, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputReader: {fileID: 11400000, guid: bcc0d4604549f5e43b067642c9fee975, type: 2}
+  rotationSpeed: 100
 --- !u!1 &1688195950 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4416926081852918481, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
@@ -1370,6 +1400,10 @@ PrefabInstance:
       propertyPath: sprint
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 135756642000475821, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+      propertyPath: inputReader
+      value: 
+      objectReference: {fileID: 11400000, guid: bcc0d4604549f5e43b067642c9fee975, type: 2}
     - target: {fileID: 135756642000475821, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       propertyPath: cursorLocked
       value: 0
@@ -1585,14 +1619,18 @@ PrefabInstance:
     - target: {fileID: 4416926081852918493, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       propertyPath: m_Actions
       value: 
-      objectReference: {fileID: -944628639613478452, guid: 4419d82f33d36e848b3ed5af4c8da37e, type: 3}
+      objectReference: {fileID: -944628639613478452, guid: f9a4fee0653ae1644bf5a04bfc6d63cc, type: 3}
+    - target: {fileID: 4416926081852918493, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+      propertyPath: m_DefaultActionMap
+      value: Gameplay
+      objectReference: {fileID: 0}
     - target: {fileID: 4416926081852918493, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       propertyPath: m_DefaultControlScheme
-      value: KeyboardMouse
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4416926081852918493, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       propertyPath: m_NeverAutoSwitchControlSchemes
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4523139366846529165, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       propertyPath: m_Layer
@@ -1931,7 +1969,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd802ce0cf235a48a122b0d1f247810, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prompt: Sphere
+  holdInteract: 0
+  holdDuration: 0
+  multipleUse: 0
+  isInteractable: 0
+  interactionPrompt: 
 --- !u!135 &1924472522
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2166,7 +2208,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f33202fc76d51e64887871e14a863d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prompt: Cylinder
+  holdInteract: 0
+  holdDuration: 0
+  multipleUse: 0
+  isInteractable: 0
+  interactionPrompt: 
 --- !u!136 &1989425299
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2434,7 +2480,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1688195950}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3aeefbdf4bea7f4485e3b07a6e076da, type: 3}
   m_Name: 
@@ -2453,7 +2499,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1688195950}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe21866e01514004b8d3965c9e7d3e5c, type: 3}
   m_Name: 
