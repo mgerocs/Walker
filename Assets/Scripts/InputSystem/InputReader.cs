@@ -32,6 +32,7 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions, GameInp
         _gameInput.UI.Enable();
     }
 
+    #region Gameplay events
     public event Action<Vector2> MoveEvent;
 
     public event Action JumpEvent;
@@ -41,9 +42,22 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions, GameInp
 
     public event Action<Vector2> RotateCameraEvent;
 
+    public event Action InteractEvent;
+    public event Action InteractCanceledEvent;
+
+    public event Action OpenMenuEvent;
+
+    public event Action HighlightInteractablesEvent;
+    public event Action HighlightInteractablesCanceledEvent;
+    #endregion
+
+    #region UI events
+    public event Action CloseMenuEvent;
+    #endregion
+
+    #region Gameplay event handlers
     public void OnMove(InputAction.CallbackContext context)
     {
-        Debug.Log($"Phase: {context.phase}, Value: {context.ReadValue<Vector2>()}");
         MoveEvent?.Invoke(context.ReadValue<Vector2>());
     }
 
@@ -73,23 +87,41 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions, GameInp
         RotateCameraEvent?.Invoke(context.ReadValue<Vector2>());
     }
 
-    /*  public void OnPause(InputAction.CallbackContext context)
-     {
-         if (context.phase == InputActionPhase.Performed)
-         {
-             PauseEvent?.Invoke();
-             SetUI();
-         }
-     }
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            InteractEvent?.Invoke();
+        }
 
-     public void OnResume(InputAction.CallbackContext context)
-     {
-         if (context.phase == InputActionPhase.Performed)
-         {
-             ResumeEvent?.Invoke();
-             SetGameplay();
-         }
-     } */
+        if (context.phase == InputActionPhase.Canceled)
+        {
+            InteractCanceledEvent?.Invoke();
+        }
+    }
+    public void OnOpenMenu(InputAction.CallbackContext context)
+    {
+        OpenMenuEvent?.Invoke();
+    }
 
+    public void OnHighlightInteractables(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            HighlightInteractablesEvent?.Invoke();
+        }
 
+        if (context.phase == InputActionPhase.Canceled)
+        {
+            HighlightInteractablesCanceledEvent?.Invoke();
+        }
+    }
+    #endregion
+
+    #region UI event handlers
+    public void OnCloseMenu(InputAction.CallbackContext context)
+    {
+        CloseMenuEvent?.Invoke();
+    }
+    #endregion
 }

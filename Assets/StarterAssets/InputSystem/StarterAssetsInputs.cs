@@ -1,9 +1,4 @@
 using UnityEngine;
-using Cinemachine;
-
-#if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem;
-#endif
 
 namespace StarterAssets
 {
@@ -22,19 +17,28 @@ namespace StarterAssets
 		private void OnEnable()
 		{
 			inputReader.SetGameplay();
-		}
 
-		private void Start()
-		{
 			// Subscribe to InputReader events
 			inputReader.MoveEvent += HandleMove;
 
 			inputReader.JumpEvent += HandleJump;
-			inputReader.JumpCanceledEvent += HandleCanceledJump;
+			inputReader.JumpCanceledEvent += HandleJumpCanceled;
 
 			inputReader.ToggleSprintEvent += HandleToggleSprint;
 
 			inputReader.RotateCameraEvent += HandleRotateCamera;
+		}
+
+		private void OnDisable()
+		{
+			inputReader.MoveEvent -= HandleMove;
+
+			inputReader.JumpEvent -= HandleJump;
+			inputReader.JumpCanceledEvent -= HandleJumpCanceled;
+
+			inputReader.ToggleSprintEvent -= HandleToggleSprint;
+
+			inputReader.RotateCameraEvent -= HandleRotateCamera;
 		}
 
 		private void HandleMove(Vector2 direction)
@@ -47,7 +51,7 @@ namespace StarterAssets
 			jump = true;
 		}
 
-		private void HandleCanceledJump()
+		private void HandleJumpCanceled()
 		{
 			jump = false;
 		}

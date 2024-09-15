@@ -11,6 +11,21 @@ public class InteractionData : ScriptableObject
         set => _interactable = value;
     }
 
+    public string InteractionPrompt
+    {
+        get => _interactable.InteractionPrompt;
+    }
+
+    public void Highlight()
+    {
+        _interactable.Highlight();
+    }
+
+    public void Unhighlight()
+    {
+        _interactable.Unhighlight();
+    }
+
     public void Interact()
     {
         _interactable.OnInteract();

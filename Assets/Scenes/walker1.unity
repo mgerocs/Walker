@@ -118,6 +118,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &183722229
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 183722230}
+  - component: {fileID: 183722231}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &183722230
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183722229}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.215}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &183722231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183722229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c36604eed85b27a449a458233915c521, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputReader: {fileID: 11400000, guid: bcc0d4604549f5e43b067642c9fee975, type: 2}
 --- !u!1 &256431796 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2070925441746177671, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
@@ -568,11 +613,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd802ce0cf235a48a122b0d1f247810, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holdInteract: 0
-  holdDuration: 0
+  inputReader: {fileID: 11400000, guid: bcc0d4604549f5e43b067642c9fee975, type: 2}
   multipleUse: 0
-  isInteractable: 0
-  interactionPrompt: 
+  isInteractable: 1
+  interactionPrompt: Open Chest
+  _outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  _outlineWidth: 5
 --- !u!1 &874605735
 GameObject:
   m_ObjectHideFlags: 0
@@ -850,7 +896,7 @@ GameObject:
   m_Component:
   - component: {fileID: 893171255}
   m_Layer: 3
-  m_Name: InteractionPoint
+  m_Name: InteractionTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1149,11 +1195,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f33202fc76d51e64887871e14a863d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holdInteract: 0
-  holdDuration: 0
+  inputReader: {fileID: 11400000, guid: bcc0d4604549f5e43b067642c9fee975, type: 2}
   multipleUse: 0
-  isInteractable: 0
-  interactionPrompt: 
+  isInteractable: 1
+  interactionPrompt: Open Door
+  _outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  _outlineWidth: 5
 --- !u!1001 &1402827283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1352,8 +1399,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1892c6f44be856b43bd58ca8da41da23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionData: {fileID: 11400000, guid: faf4d0e115dc4e94186140a73447afe1, type: 2}
   _textMesh: {fileID: 281754984}
-  isDisplayed: 0
 --- !u!114 &1676453990 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2070925441746177913, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
@@ -1622,7 +1669,7 @@ PrefabInstance:
       objectReference: {fileID: -944628639613478452, guid: f9a4fee0653ae1644bf5a04bfc6d63cc, type: 3}
     - target: {fileID: 4416926081852918493, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       propertyPath: m_DefaultActionMap
-      value: Gameplay
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4416926081852918493, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       propertyPath: m_DefaultControlScheme
@@ -1804,6 +1851,9 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4416926081852918481, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 4416926083347132247}
+    - targetCorrespondingSourceObject: {fileID: 4416926081852918481, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 4416926083347132246}
     - targetCorrespondingSourceObject: {fileID: 4416926081852918481, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       insertIndex: -1
@@ -1969,11 +2019,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd802ce0cf235a48a122b0d1f247810, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holdInteract: 0
-  holdDuration: 0
+  inputReader: {fileID: 11400000, guid: bcc0d4604549f5e43b067642c9fee975, type: 2}
   multipleUse: 0
   isInteractable: 0
-  interactionPrompt: 
+  interactionPrompt: Push Sphere
+  _outlineColor: {r: 0.93965966, g: 1, b: 0.4198113, a: 1}
+  _outlineWidth: 5
 --- !u!135 &1924472522
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2208,11 +2259,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f33202fc76d51e64887871e14a863d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holdInteract: 0
-  holdDuration: 0
+  inputReader: {fileID: 11400000, guid: bcc0d4604549f5e43b067642c9fee975, type: 2}
   multipleUse: 0
-  isInteractable: 0
-  interactionPrompt: 
+  isInteractable: 1
+  interactionPrompt: Look at Cylinder
+  _outlineColor: {r: 0, g: 0.11251116, b: 1, a: 1}
+  _outlineWidth: 5
 --- !u!136 &1989425299
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2488,7 +2540,6 @@ MonoBehaviour:
   _interactionPoint: {fileID: 893171255}
   _interactionPointRadius: 0.25
   _interactableMask:
-    serializedVersion: 2
     m_Bits: 64
   _interactionPromptUI: {fileID: 1631096269}
   _numFound: 0
@@ -2505,6 +2556,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasKey: 0
+--- !u!114 &4416926083347132247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688195950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4bac8d0574739346a2a282b80939310, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputReader: {fileID: 11400000, guid: bcc0d4604549f5e43b067642c9fee975, type: 2}
+  interactionData: {fileID: 11400000, guid: faf4d0e115dc4e94186140a73447afe1, type: 2}
+  interactioninputData: {fileID: 11400000, guid: 79561610e7f445b4a94734ee687e21a9, type: 2}
+  interactionTrigger: {fileID: 893171255}
+  interactionPromptUI: {fileID: 1631096269}
+  overlapShpereRadius: 0.5
+  interactableLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!20 &6998012634598321288
 Camera:
   m_ObjectHideFlags: 0
@@ -2807,6 +2879,7 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 183722230}
   - {fileID: 2114283753834967213}
   - {fileID: 8345070700268369567}
   - {fileID: 1221041499}

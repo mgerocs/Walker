@@ -5,46 +5,61 @@ using UnityEngine;
 public class InteractionController : MonoBehaviour
 {
     #region Variables
-    [Header("Data")]
-    /* public InteractionInputData interactionInputData; */
+    public InputReader inputReader;
 
     public InteractionData interactionData;
 
-    public Transform interactionPoint;
+    public InteractionInputData interactioninputData;
 
-    [Header("Ray Settings")]
-    public float overlapShpereRadius;
+    public Transform interactionTrigger;
+
+    public InteractionPromptUI interactionPromptUI;
+
+    public float overlapShpereRadius = 0.5f;
 
     public LayerMask interactableLayer;
-
-    private Camera _cam;
 
     private readonly Collider[] _colliders = new Collider[3];
     #endregion
 
     #region Built in methods
-    void Awake()
+    private void OnEnable()
     {
-        _cam = FindAnyObjectByType<Camera>();
+        inputReader.InteractEvent += HandleInteract;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
+    {
+        inputReader.InteractEvent -= HandleInteract;
+    }
+
+    private void Update()
     {
         CheckForInteractable();
-        CheckForInteractableInput();
+    }
+    #endregion
+
+    #region EVent handlers
+    private void HandleInteract()
+    {
+        if (interactionData.IsEmpty()) return;
+
+        if (!interactionData.Interactable.IsInteractable) return;
+
+        interactionData.Interact();
     }
     #endregion
 
     #region Custom methods
-    void CheckForInteractable()
+    private void CheckForInteractable()
     {
         int numFound = Physics.OverlapSphereNonAlloc(
-            interactionPoint.position,
+            interactionTrigger.position,
             overlapShpereRadius,
             _colliders,
             interactableLayer
         );
+
         if (numFound > 0)
         {
             InteractableBase _interactable = _colliders[0].GetComponent<InteractableBase>();
@@ -53,26 +68,27 @@ public class InteractionController : MonoBehaviour
             {
                 if (interactionData.IsEmpty())
                 {
-                    Debug.Log("found interactable");
                     interactionData.Interactable = _interactable;
                 }
                 else
                 {
                     if (!interactionData.IsSameInteractable(_interactable))
                     {
-                        Debug.Log("found another interactable");
                         interactionData.Interactable = _interactable;
                     }
                 }
+
+                interactionData.Highlight();
             }
         }
         else
         {
-            Debug.Log("no interactable found");
-            interactionData.ResetData();
+            if (!interactionData.IsEmpty())
+            {
+                interactionData.Unhighlight();
+                interactionData.ResetData();
+            }
         }
     }
-
-    void CheckForInteractableInput() { }
     #endregion
 }

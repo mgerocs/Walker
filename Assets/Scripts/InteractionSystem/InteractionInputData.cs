@@ -3,24 +3,24 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "InteractionInputData", menuName = "Scriptable Objects/InteractionInputData")]
 public class InteractionInputData : ScriptableObject
 {
-    private bool m_interactedClicked;
-    private bool m_interactedReleased;
+    private bool _interactedClicked;
+    private bool _interactedReleased;
 
     public bool InteractedClicked
     {
-        get => m_interactedClicked;
-        set => m_interactedClicked = value;
+        get => _interactedClicked;
+        set => _interactedClicked = value;
     }
 
     public bool InteractedReleased
     {
-        get => m_interactedReleased;
-        set => m_interactedReleased = value;
+        get => _interactedReleased;
+        set => _interactedReleased = value;
     }
 
     public void ResetInput()
     {
-        m_interactedClicked = false;
-        m_interactedReleased = false;
+        _interactedClicked = false;
+        _interactedReleased = false;
     }
 }

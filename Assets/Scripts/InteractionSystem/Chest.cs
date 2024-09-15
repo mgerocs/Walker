@@ -1,20 +1,12 @@
+using System.Buffers.Text;
 using UnityEngine;
 
 public class Chest : InteractableBase
 {
-
-   /*  [SerializeField] private string _prompt;
-
-    public string InteractionPrompt => _prompt;
-
-    public bool HoldInteract => false;
-
-    public bool MultipleUse => true;
-
-    public bool IsInteractable => true;
-
-    public void OnInteract(Interactor interactor)
+    public override void OnInteract()
     {
-        Debug.Log("Opening Chest");
-    } */
+        base.OnInteract();
+
+        Debug.Log("I am a Chest");
+    }
 }

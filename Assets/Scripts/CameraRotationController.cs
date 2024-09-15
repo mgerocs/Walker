@@ -2,10 +2,8 @@ using UnityEngine;
 
 public class CameraRotationController : MonoBehaviour
 {
-    [Header("Input Reader")]
     public InputReader inputReader;
 
-    [Header("Camera rotation speed")]
     public float rotationSpeed = 100f;
 
     private float _rotate;
