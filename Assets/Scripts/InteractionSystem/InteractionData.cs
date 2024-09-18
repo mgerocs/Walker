@@ -3,8 +3,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "InteractionData", menuName = "Scriptable Objects/InteractionData")]
 public class InteractionData : ScriptableObject
 {
-    private InteractableBase _interactable;
-
     public InteractableBase Interactable
     {
         get => _interactable;
@@ -38,4 +36,6 @@ public class InteractionData : ScriptableObject
     public bool IsEmpty() => _interactable == null;
 
     public void ResetData() => _interactable = null;
+
+    private InteractableBase _interactable;
 }

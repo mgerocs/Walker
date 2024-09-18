@@ -4,59 +4,79 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public InputReader inputReader;
+    [SerializeField]
+    private InputReader _inputReader;
+
+    [SerializeField]
+    private MenuTracker _menuTracker;
 
     private void Awake()
     {
-        if (Instance == null)
+        if (Instance != null && Instance != this)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            Destroy(this);
         }
         else
         {
-            Destroy(gameObject);
+            Instance = this;
         }
     }
 
     private void OnEnable()
     {
-        inputReader.OpenMenuEvent += HandleOpenMenu;
-        inputReader.CloseMenuEvent += HandleCloseMenu;
+        EventManager.OnPause += HandlePause;
+        EventManager.OnResume += HandleResume;
     }
 
     private void Start()
     {
-
+        Init();
     }
 
     private void OnDisable()
     {
-        inputReader.OpenMenuEvent -= HandleOpenMenu;
-        inputReader.CloseMenuEvent -= HandleCloseMenu;
+        EventManager.OnPause -= HandlePause;
+        EventManager.OnResume -= HandleResume;
     }
 
-    private void HandleOpenMenu()
+    public bool IsPaused { get; private set; } = false;
+
+    private void HandlePause(Component component)
     {
-        Pause();
+        if (!IsPaused)
+        {
+            IsPaused = true;
+            Pause();
+        }
     }
 
-    private void HandleCloseMenu()
+    private void HandleResume(Component component)
     {
-        Resume();
+        if (IsPaused)
+        {
+            IsPaused = false;
+            Resume();
+        }
     }
 
     private void Pause()
     {
         Time.timeScale = 0;
 
-        inputReader.SetUI();
+        _inputReader.SetUI();
     }
 
     private void Resume()
     {
         Time.timeScale = 1;
 
-        inputReader.SetGameplay();
+        _inputReader.SetGameplay();
+    }
+
+    private void Init()
+    {
+        Time.timeScale = 1;
+
+        _inputReader.SetGameplay();
     }
 }

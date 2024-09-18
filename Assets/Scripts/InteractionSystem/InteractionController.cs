@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class InteractionController : MonoBehaviour
 {
-    #region Variables
     public InputReader inputReader;
 
     public InteractionData interactionData;
@@ -20,9 +19,7 @@ public class InteractionController : MonoBehaviour
     public LayerMask interactableLayer;
 
     private readonly Collider[] _colliders = new Collider[3];
-    #endregion
 
-    #region Built in methods
     private void OnEnable()
     {
         inputReader.InteractEvent += HandleInteract;
@@ -37,9 +34,7 @@ public class InteractionController : MonoBehaviour
     {
         CheckForInteractable();
     }
-    #endregion
 
-    #region EVent handlers
     private void HandleInteract()
     {
         if (interactionData.IsEmpty()) return;
@@ -48,9 +43,7 @@ public class InteractionController : MonoBehaviour
 
         interactionData.Interact();
     }
-    #endregion
 
-    #region Custom methods
     private void CheckForInteractable()
     {
         int numFound = Physics.OverlapSphereNonAlloc(
@@ -90,5 +83,4 @@ public class InteractionController : MonoBehaviour
             }
         }
     }
-    #endregion
 }

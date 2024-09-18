@@ -45,14 +45,14 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions, GameInp
     public event Action InteractEvent;
     public event Action InteractCanceledEvent;
 
-    public event Action OpenMenuEvent;
+    public event Action PauseEvent;
 
     public event Action HighlightInteractablesEvent;
     public event Action HighlightInteractablesCanceledEvent;
     #endregion
 
     #region UI events
-    public event Action CloseMenuEvent;
+    public event Action ResumeCloseMenuEvent;
     #endregion
 
     #region Gameplay event handlers
@@ -99,9 +99,13 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions, GameInp
             InteractCanceledEvent?.Invoke();
         }
     }
-    public void OnOpenMenu(InputAction.CallbackContext context)
+
+    public void OnPause(InputAction.CallbackContext context)
     {
-        OpenMenuEvent?.Invoke();
+        if (context.phase == InputActionPhase.Performed)
+        {
+            PauseEvent?.Invoke();
+        }
     }
 
     public void OnHighlightInteractables(InputAction.CallbackContext context)
@@ -119,9 +123,12 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions, GameInp
     #endregion
 
     #region UI event handlers
-    public void OnCloseMenu(InputAction.CallbackContext context)
+    public void OnResumeCloseMenu(InputAction.CallbackContext context)
     {
-        CloseMenuEvent?.Invoke();
+        if (context.phase == InputActionPhase.Performed)
+        {
+            ResumeCloseMenuEvent?.Invoke();
+        }
     }
     #endregion
 }

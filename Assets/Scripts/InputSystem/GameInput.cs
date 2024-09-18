@@ -74,7 +74,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""OpenMenu"",
+                    ""name"": ""Pause"",
                     ""type"": ""Button"",
                     ""id"": ""b315778c-9470-4472-864c-95ba42bec3a0"",
                     ""expectedControlType"": """",
@@ -166,7 +166,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";KeyboardMouse"",
-                    ""action"": ""OpenMenu"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -177,7 +177,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""OpenMenu"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -320,7 +320,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             ""id"": ""7493752c-78a4-4a8a-9001-6d2aadd67ba9"",
             ""actions"": [
                 {
-                    ""name"": ""CloseMenu"",
+                    ""name"": ""Resume/CloseMenu"",
                     ""type"": ""Button"",
                     ""id"": ""7aab2f39-5212-417f-9d9d-a5c91a014cc4"",
                     ""expectedControlType"": """",
@@ -337,7 +337,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";KeyboardMouse"",
-                    ""action"": ""CloseMenu"",
+                    ""action"": ""Resume/CloseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -348,7 +348,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""CloseMenu"",
+                    ""action"": ""Resume/CloseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -392,11 +392,11 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_Gameplay_Sprint = m_Gameplay.FindAction("Sprint", throwIfNotFound: true);
         m_Gameplay_RotateCamera = m_Gameplay.FindAction("RotateCamera", throwIfNotFound: true);
         m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
-        m_Gameplay_OpenMenu = m_Gameplay.FindAction("OpenMenu", throwIfNotFound: true);
+        m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
         m_Gameplay_HighlightInteractables = m_Gameplay.FindAction("HighlightInteractables", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
-        m_UI_CloseMenu = m_UI.FindAction("CloseMenu", throwIfNotFound: true);
+        m_UI_ResumeCloseMenu = m_UI.FindAction("Resume/CloseMenu", throwIfNotFound: true);
     }
 
     ~@GameInput()
@@ -469,7 +469,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Sprint;
     private readonly InputAction m_Gameplay_RotateCamera;
     private readonly InputAction m_Gameplay_Interact;
-    private readonly InputAction m_Gameplay_OpenMenu;
+    private readonly InputAction m_Gameplay_Pause;
     private readonly InputAction m_Gameplay_HighlightInteractables;
     public struct GameplayActions
     {
@@ -480,7 +480,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         public InputAction @Sprint => m_Wrapper.m_Gameplay_Sprint;
         public InputAction @RotateCamera => m_Wrapper.m_Gameplay_RotateCamera;
         public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
-        public InputAction @OpenMenu => m_Wrapper.m_Gameplay_OpenMenu;
+        public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
         public InputAction @HighlightInteractables => m_Wrapper.m_Gameplay_HighlightInteractables;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
@@ -506,9 +506,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
-            @OpenMenu.started += instance.OnOpenMenu;
-            @OpenMenu.performed += instance.OnOpenMenu;
-            @OpenMenu.canceled += instance.OnOpenMenu;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
             @HighlightInteractables.started += instance.OnHighlightInteractables;
             @HighlightInteractables.performed += instance.OnHighlightInteractables;
             @HighlightInteractables.canceled += instance.OnHighlightInteractables;
@@ -531,9 +531,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
-            @OpenMenu.started -= instance.OnOpenMenu;
-            @OpenMenu.performed -= instance.OnOpenMenu;
-            @OpenMenu.canceled -= instance.OnOpenMenu;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
             @HighlightInteractables.started -= instance.OnHighlightInteractables;
             @HighlightInteractables.performed -= instance.OnHighlightInteractables;
             @HighlightInteractables.canceled -= instance.OnHighlightInteractables;
@@ -558,12 +558,12 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     // UI
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
-    private readonly InputAction m_UI_CloseMenu;
+    private readonly InputAction m_UI_ResumeCloseMenu;
     public struct UIActions
     {
         private @GameInput m_Wrapper;
         public UIActions(@GameInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @CloseMenu => m_Wrapper.m_UI_CloseMenu;
+        public InputAction @ResumeCloseMenu => m_Wrapper.m_UI_ResumeCloseMenu;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -573,16 +573,16 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
-            @CloseMenu.started += instance.OnCloseMenu;
-            @CloseMenu.performed += instance.OnCloseMenu;
-            @CloseMenu.canceled += instance.OnCloseMenu;
+            @ResumeCloseMenu.started += instance.OnResumeCloseMenu;
+            @ResumeCloseMenu.performed += instance.OnResumeCloseMenu;
+            @ResumeCloseMenu.canceled += instance.OnResumeCloseMenu;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
         {
-            @CloseMenu.started -= instance.OnCloseMenu;
-            @CloseMenu.performed -= instance.OnCloseMenu;
-            @CloseMenu.canceled -= instance.OnCloseMenu;
+            @ResumeCloseMenu.started -= instance.OnResumeCloseMenu;
+            @ResumeCloseMenu.performed -= instance.OnResumeCloseMenu;
+            @ResumeCloseMenu.canceled -= instance.OnResumeCloseMenu;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -625,11 +625,11 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnRotateCamera(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
-        void OnOpenMenu(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
         void OnHighlightInteractables(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
-        void OnCloseMenu(InputAction.CallbackContext context);
+        void OnResumeCloseMenu(InputAction.CallbackContext context);
     }
 }

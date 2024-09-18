@@ -51,7 +51,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "OpenMenu",
+                    "name": "Pause",
                     "type": "Button",
                     "id": "b315778c-9470-4472-864c-95ba42bec3a0",
                     "expectedControlType": "",
@@ -143,7 +143,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";KeyboardMouse",
-                    "action": "OpenMenu",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -154,7 +154,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "OpenMenu",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -297,7 +297,7 @@
             "id": "7493752c-78a4-4a8a-9001-6d2aadd67ba9",
             "actions": [
                 {
-                    "name": "CloseMenu",
+                    "name": "Resume/CloseMenu",
                     "type": "Button",
                     "id": "7aab2f39-5212-417f-9d9d-a5c91a014cc4",
                     "expectedControlType": "",
@@ -314,7 +314,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";KeyboardMouse",
-                    "action": "CloseMenu",
+                    "action": "Resume/CloseMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -325,7 +325,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "CloseMenu",
+                    "action": "Resume/CloseMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
