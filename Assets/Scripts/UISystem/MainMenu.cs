@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(AudioSource), typeof(CanvasGroup))]
 [DisallowMultipleComponent]
@@ -23,7 +22,7 @@ public class MainMenu : MenuBase
 
     public void StartGame()
     {
-        SceneManager.LoadSceneAsync(_startingScene);
+
     }
 
     public void LoadGame()

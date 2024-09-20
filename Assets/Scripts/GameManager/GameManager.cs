@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -9,6 +11,16 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private MenuTracker _menuTracker;
+
+    [SerializeField]
+    private SceneTracker _sceneTracker;
+
+
+    [SerializeField]
+    private GameObject _player;
+
+    [SerializeField]
+    private SpawnPoint _defaultSpawnPoint;
 
     private void Awake()
     {
@@ -30,7 +42,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Init();
+        SpawnCharacter();
     }
 
     private void OnDisable()
@@ -78,5 +90,53 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
 
         _inputReader.SetGameplay();
+    }
+
+    private void SpawnCharacter()
+    {
+        if (_player == null) return;
+
+        if (_player.tag != "Player") return;
+
+        if (_player.activeInHierarchy) return;
+
+        SpawnPoint spawnPoint = _defaultSpawnPoint;
+
+        string prevGatewayName = _sceneTracker.GatewayName;
+
+        if (prevGatewayName != null)
+        {
+            Gateway[] gatewaysInScene = FindObjectsByType<Gateway>(FindObjectsSortMode.None);
+
+            if (gatewaysInScene.Length == 0)
+            {
+                throw new Exception("No Gateways in scene.");
+            }
+
+            if (gatewaysInScene.Length > 1)
+            {
+                Gateway targetGateway = gatewaysInScene.FirstOrDefault(g => g.Name == prevGatewayName);
+
+                if (targetGateway != null)
+                {
+                    spawnPoint = targetGateway.SpawnPoint;
+                }
+            }
+            else
+            {
+                spawnPoint = gatewaysInScene[0].SpawnPoint;
+            }
+
+            if (spawnPoint == null)
+            {
+                throw new Exception("No SpawnPoint found.");
+            }
+        }
+
+        GameObject instance = Instantiate(_player, spawnPoint.gameObject.transform.position, spawnPoint.gameObject.transform.rotation);
+
+        EventManager.OnPlayerSpawn.Invoke(instance);
+
+        Init();
     }
 }
