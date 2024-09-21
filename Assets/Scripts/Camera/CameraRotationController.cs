@@ -4,9 +4,6 @@ using UnityEngine;
 public class CameraRotationController : MonoBehaviour
 {
     [SerializeField]
-    private InputReader _inputReader;
-
-    [SerializeField]
     private float _rotationSpeed = 100f;
 
     private CinemachineVirtualCamera _vcam;
@@ -17,19 +14,14 @@ public class CameraRotationController : MonoBehaviour
     {
         _vcam = gameObject.GetComponent<CinemachineVirtualCamera>();
 
-        _inputReader.RotateCameraEvent += HandleRotateCamera;
+        EventManager.OnRotateCamera += HandleRotateCamera;
 
         EventManager.OnPlayerSpawn += HandlePlayerSpawn;
     }
 
-
-    private void Start()
-    {
-    }
-
     private void OnDisable()
     {
-        _inputReader.RotateCameraEvent -= HandleRotateCamera;
+        EventManager.OnRotateCamera -= HandleRotateCamera;
 
         EventManager.OnPlayerSpawn -= HandlePlayerSpawn;
     }
@@ -44,18 +36,20 @@ public class CameraRotationController : MonoBehaviour
         _rotate = direction.x;
     }
 
-    private void HandlePlayerSpawn(GameObject player)
+    private void HandlePlayerSpawn(GameObject player, SpawnPoint spawnPoint)
     {
         if (player == null) return;
 
+        if (spawnPoint == null) return;
+
         _vcam.Follow = player.transform;
 
-         Vector3 currentRotation = _vcam.transform.rotation.eulerAngles;
+        Vector3 currentRotation = _vcam.transform.rotation.eulerAngles;
 
-         float newYRotation = player.transform.rotation.y;
+        Vector3 newRotation = spawnPoint.gameObject.transform.eulerAngles;
 
-         Quaternion targetRotation = Quaternion.Euler(currentRotation.x, newYRotation, currentRotation.z);
-         
+        Quaternion targetRotation = Quaternion.Euler(currentRotation.x, newRotation.y, currentRotation.z);
+
         _vcam.transform.rotation = targetRotation;
     }
 

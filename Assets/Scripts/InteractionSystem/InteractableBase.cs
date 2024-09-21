@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class InteractableBase : MonoBehaviour, IInteractable
 {
-    public InputReader inputReader;
-
     public bool multipleUse;
 
     public bool isInteractable;
@@ -26,8 +24,8 @@ public class InteractableBase : MonoBehaviour, IInteractable
 
     private void OnEnable()
     {
-        inputReader.HighlightInteractablesEvent += HandleHighlightInteractables;
-        inputReader.HighlightInteractablesCanceledEvent += HandleHighlightInteractablesCanceled;
+        EventManager.OnHighlightInteractables += HandleHighlightInteractables;
+        EventManager.OnCancelHighlightInteractables += HandleHighlightInteractablesCanceled;
     }
 
     private void Start()
@@ -41,8 +39,8 @@ public class InteractableBase : MonoBehaviour, IInteractable
 
     private void OnDisable()
     {
-        inputReader.HighlightInteractablesEvent -= HandleHighlightInteractables;
-        inputReader.HighlightInteractablesCanceledEvent -= HandleHighlightInteractablesCanceled;
+        EventManager.OnHighlightInteractables -= HandleHighlightInteractables;
+        EventManager.OnCancelHighlightInteractables -= HandleHighlightInteractablesCanceled;
     }
 
     private void HandleHighlightInteractables()

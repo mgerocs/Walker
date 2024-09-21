@@ -98,7 +98,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3941636469911410032}
   - component: {fileID: 7942234690433712533}
-  - component: {fileID: 3171897852606052463}
+  - component: {fileID: 8216017712890562147}
   m_Layer: 0
   m_Name: PlayerFollowCamera
   m_TagString: Untagged
@@ -115,7 +115,7 @@ Transform:
   m_GameObject: {fileID: 4940335122620874411}
   serializedVersion: 2
   m_LocalRotation: {x: 0.17357616, y: 0.02835648, z: -0.005000012, w: 0.9843995}
-  m_LocalPosition: {x: -0.43273956, y: 4.111161, z: -7.5050755}
+  m_LocalPosition: {x: 9.42726, y: 4.111161, z: -7.505076}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -161,7 +161,7 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 3566808652368536786}
---- !u!114 &3171897852606052463
+--- !u!114 &8216017712890562147
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -173,5 +173,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f6e2fb364d08d041a741f9e46589222, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputReader: {fileID: 11400000, guid: bcc0d4604549f5e43b067642c9fee975, type: 2}
-  rotationSpeed: 100
+  _rotationSpeed: 100

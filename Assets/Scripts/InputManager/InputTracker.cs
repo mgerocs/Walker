@@ -1,11 +1,10 @@
 // https://www.youtube.com/watch?v=ZHOWqF-b51k&ab_channel=Paridot
 
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[CreateAssetMenu(fileName = "InputReader", menuName = "Scriptable Objects/InputReader")]
-public class InputReader : ScriptableObject, GameInput.IGameplayActions, GameInput.IUIActions
+[CreateAssetMenu(fileName = "InputTracker", menuName = "Scriptable Objects/InputTracker")]
+public class InputTracker : ScriptableObject, GameInput.IGameplayActions, GameInput.IUIActions
 {
     private GameInput _gameInput;
 
@@ -32,45 +31,22 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions, GameInp
         _gameInput.UI.Enable();
     }
 
-    #region Gameplay events
-    public event Action<Vector2> MoveEvent;
-
-    public event Action JumpEvent;
-    public event Action JumpCanceledEvent;
-
-    public event Action ToggleSprintEvent;
-
-    public event Action<Vector2> RotateCameraEvent;
-
-    public event Action InteractEvent;
-    public event Action InteractCanceledEvent;
-
-    public event Action PauseEvent;
-
-    public event Action HighlightInteractablesEvent;
-    public event Action HighlightInteractablesCanceledEvent;
-    #endregion
-
-    #region UI events
-    public event Action ResumeCloseMenuEvent;
-    #endregion
-
     #region Gameplay event handlers
     public void OnMove(InputAction.CallbackContext context)
     {
-        MoveEvent?.Invoke(context.ReadValue<Vector2>());
+        EventManager.OnMove.Invoke(context.ReadValue<Vector2>());
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            JumpEvent?.Invoke();
+            EventManager.OnJump.Invoke();
         }
 
         if (context.phase == InputActionPhase.Canceled)
         {
-            JumpCanceledEvent?.Invoke();
+            EventManager.OnCancelJump.Invoke();
         }
     }
 
@@ -78,25 +54,25 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions, GameInp
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            ToggleSprintEvent?.Invoke();
+            EventManager.OnToggleSprint.Invoke();
         }
     }
 
     public void OnRotateCamera(InputAction.CallbackContext context)
     {
-        RotateCameraEvent?.Invoke(context.ReadValue<Vector2>());
+        EventManager.OnRotateCamera.Invoke(context.ReadValue<Vector2>());
     }
 
     public void OnInteract(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            InteractEvent?.Invoke();
+            EventManager.OnInteract.Invoke();
         }
 
         if (context.phase == InputActionPhase.Canceled)
         {
-            InteractCanceledEvent?.Invoke();
+            EventManager.OnCancelInteract.Invoke();
         }
     }
 
@@ -104,7 +80,7 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions, GameInp
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            PauseEvent?.Invoke();
+            EventManager.OnPause.Invoke();
         }
     }
 
@@ -112,12 +88,12 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions, GameInp
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            HighlightInteractablesEvent?.Invoke();
+            EventManager.OnHighlightInteractables.Invoke();
         }
 
         if (context.phase == InputActionPhase.Canceled)
         {
-            HighlightInteractablesCanceledEvent?.Invoke();
+            EventManager.OnCancelHighlightInteractables.Invoke();
         }
     }
     #endregion
@@ -127,7 +103,7 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions, GameInp
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            ResumeCloseMenuEvent?.Invoke();
+            EventManager.OnCloseMenu.Invoke();
         }
     }
     #endregion

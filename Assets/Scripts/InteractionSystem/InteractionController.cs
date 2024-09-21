@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class InteractionController : MonoBehaviour
 {
-    public InputReader inputReader;
-
     public InteractionData interactionData;
 
     public InteractionInputData interactioninputData;
@@ -22,12 +20,12 @@ public class InteractionController : MonoBehaviour
 
     private void OnEnable()
     {
-        inputReader.InteractEvent += HandleInteract;
+        EventManager.OnInteract += HandleInteract;
     }
 
     private void OnDisable()
     {
-        inputReader.InteractEvent -= HandleInteract;
+        EventManager.OnInteract -= HandleInteract;
     }
 
     private void Update()

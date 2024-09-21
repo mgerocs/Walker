@@ -4,9 +4,6 @@ namespace StarterAssets
 {
 	public class StarterAssetsInputs : MonoBehaviour
 	{
-		[Header("Input Reader")]
-		public InputReader inputReader;
-
 		[Header("Character Input Values")]
 		public Vector2 move;
 		public Vector2 look;
@@ -16,29 +13,22 @@ namespace StarterAssets
 
 		private void OnEnable()
 		{
-			inputReader.SetGameplay();
+			EventManager.OnMove += HandleMove;
 
-			// Subscribe to InputReader events
-			inputReader.MoveEvent += HandleMove;
+			EventManager.OnJump += HandleJump;
+			EventManager.OnCancelJump += HandleJumpCanceled;
 
-			inputReader.JumpEvent += HandleJump;
-			inputReader.JumpCanceledEvent += HandleJumpCanceled;
-
-			inputReader.ToggleSprintEvent += HandleToggleSprint;
-
-			inputReader.RotateCameraEvent += HandleRotateCamera;
+			EventManager.OnToggleSprint += HandleToggleSprint;
 		}
 
 		private void OnDisable()
 		{
-			inputReader.MoveEvent -= HandleMove;
+			EventManager.OnMove -= HandleMove;
 
-			inputReader.JumpEvent -= HandleJump;
-			inputReader.JumpCanceledEvent -= HandleJumpCanceled;
+			EventManager.OnJump -= HandleJump;
+			EventManager.OnCancelJump -= HandleJumpCanceled;
 
-			inputReader.ToggleSprintEvent -= HandleToggleSprint;
-
-			inputReader.RotateCameraEvent -= HandleRotateCamera;
+			EventManager.OnToggleSprint -= HandleToggleSprint;
 		}
 
 		private void HandleMove(Vector2 direction)
@@ -59,11 +49,6 @@ namespace StarterAssets
 		private void HandleToggleSprint()
 		{
 			sprint = !sprint;
-		}
-
-		private void HandleRotateCamera(Vector2 direction)
-		{
-			rotate = direction;
 		}
 	}
 

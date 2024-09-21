@@ -140,7 +140,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 374628104778972651, guid: 16bcb311e2d471645a178f609a0cc999, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: -0.058271315
       objectReference: {fileID: 0}
     - target: {fileID: 374628104778972651, guid: 16bcb311e2d471645a178f609a0cc999, type: 3}
       propertyPath: m_LocalRotation.x
@@ -148,7 +148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 374628104778972651, guid: 16bcb311e2d471645a178f609a0cc999, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.9983008
       objectReference: {fileID: 0}
     - target: {fileID: 374628104778972651, guid: 16bcb311e2d471645a178f609a0cc999, type: 3}
       propertyPath: m_LocalRotation.z
@@ -160,7 +160,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 374628104778972651, guid: 16bcb311e2d471645a178f609a0cc999, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 186.681
       objectReference: {fileID: 0}
     - target: {fileID: 374628104778972651, guid: 16bcb311e2d471645a178f609a0cc999, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -186,6 +186,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f98b2bbc523d7f47a0a33c9e522565a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &438197491
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 438197492}
+  m_Layer: 0
+  m_Name: Cameras
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &438197492
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438197491}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7106238757330379614}
+  - {fileID: 7783830395745225233}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &540341485
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,7 +249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c36604eed85b27a449a458233915c521, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputReader: {fileID: 11400000, guid: bcc0d4604549f5e43b067642c9fee975, type: 2}
+  _inputTracker: {fileID: 11400000, guid: 589c05649a9c5034dae32b26bf4e2cf6, type: 2}
   _menuTracker: {fileID: 11400000, guid: a5a5379c3c674b648b0abfd5172880e7, type: 2}
   _sceneTracker: {fileID: 11400000, guid: 5e5ef815fa2d99346811feab1b030674, type: 2}
   _player: {fileID: 2524690459485783703, guid: 37cd5a02f3cf93e4ea69029d850902fa, type: 3}
@@ -249,7 +282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneTracker: {fileID: 11400000, guid: 5e5ef815fa2d99346811feab1b030674, type: 2}
-  _initialScene: 0
+  _initialScene: 1
 --- !u!1 &542508511
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,7 +592,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd802ce0cf235a48a122b0d1f247810, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputReader: {fileID: 11400000, guid: bcc0d4604549f5e43b067642c9fee975, type: 2}
   multipleUse: 0
   isInteractable: 1
   interactionPrompt: Open Chest
@@ -1018,7 +1050,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f33202fc76d51e64887871e14a863d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputReader: {fileID: 11400000, guid: bcc0d4604549f5e43b067642c9fee975, type: 2}
   multipleUse: 0
   isInteractable: 1
   interactionPrompt: Open Door
@@ -1205,7 +1236,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd802ce0cf235a48a122b0d1f247810, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputReader: {fileID: 11400000, guid: bcc0d4604549f5e43b067642c9fee975, type: 2}
   multipleUse: 0
   isInteractable: 0
   interactionPrompt: Push Sphere
@@ -1445,7 +1475,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f33202fc76d51e64887871e14a863d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputReader: {fileID: 11400000, guid: bcc0d4604549f5e43b067642c9fee975, type: 2}
   multipleUse: 0
   isInteractable: 1
   interactionPrompt: Look at Cylinder
@@ -1690,7 +1719,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 438197492}
     m_Modifications:
     - target: {fileID: 2057613532771607066, guid: 8db78012eef8e594ab09dcb0004d95fb, type: 3}
       propertyPath: m_Name
@@ -1741,13 +1770,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8db78012eef8e594ab09dcb0004d95fb, type: 3}
+--- !u!4 &7106238757330379614 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2927092157905850378, guid: 8db78012eef8e594ab09dcb0004d95fb, type: 3}
+  m_PrefabInstance: {fileID: 7106238757330379613}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7783830395745225232
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 438197492}
     m_Modifications:
     - target: {fileID: 3171897852606052463, guid: 7dbb77d4421351a4f9e5631319f9af49, type: 3}
       propertyPath: _inputReader
@@ -1806,6 +1840,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dbb77d4421351a4f9e5631319f9af49, type: 3}
+--- !u!4 &7783830395745225233 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3941636469911410032, guid: 7dbb77d4421351a4f9e5631319f9af49, type: 3}
+  m_PrefabInstance: {fileID: 7783830395745225232}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8345070700268369567
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1977,9 +2016,8 @@ SceneRoots:
   m_Roots:
   - {fileID: 540341487}
   - {fileID: 2114283753834967213}
+  - {fileID: 438197492}
   - {fileID: 8345070700268369567}
-  - {fileID: 7106238757330379613}
-  - {fileID: 7783830395745225232}
   - {fileID: 1979352518}
   - {fileID: 746329221}
   - {fileID: 564984766}

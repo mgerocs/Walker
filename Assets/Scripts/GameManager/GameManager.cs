@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     [SerializeField]
-    private InputReader _inputReader;
+    private InputTracker _inputTracker;
 
     [SerializeField]
     private MenuTracker _menuTracker;
@@ -36,8 +36,8 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.OnPause += HandlePause;
-        EventManager.OnResume += HandleResume;
+        EventManager.OnPauseGame += HandlePause;
+        EventManager.OnResumeGame += HandleResume;
     }
 
     private void Start()
@@ -47,8 +47,8 @@ public class GameManager : MonoBehaviour
 
     private void OnDisable()
     {
-        EventManager.OnPause -= HandlePause;
-        EventManager.OnResume -= HandleResume;
+        EventManager.OnPauseGame -= HandlePause;
+        EventManager.OnResumeGame -= HandleResume;
     }
 
     public bool IsPaused { get; private set; } = false;
@@ -75,21 +75,21 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0;
 
-        _inputReader.SetUI();
+        _inputTracker.SetUI();
     }
 
     private void Resume()
     {
         Time.timeScale = 1;
 
-        _inputReader.SetGameplay();
+        _inputTracker.SetGameplay();
     }
 
     private void Init()
     {
         Time.timeScale = 1;
 
-        _inputReader.SetGameplay();
+        _inputTracker.SetGameplay();
     }
 
     private void SpawnCharacter()
@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour
 
         GameObject instance = Instantiate(_player, spawnPoint.gameObject.transform.position, spawnPoint.gameObject.transform.rotation);
 
-        EventManager.OnPlayerSpawn.Invoke(instance);
+        EventManager.OnPlayerSpawn.Invoke(instance, spawnPoint);
 
         Init();
     }

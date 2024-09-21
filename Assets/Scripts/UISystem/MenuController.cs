@@ -11,9 +11,6 @@ public class MenuController : MonoBehaviour
     private MenuTracker _menuTracker;
 
     [SerializeField]
-    private InputReader _inputReader;
-
-    [SerializeField]
     private MenuBase _pauseMenu;
 
     [SerializeField]
@@ -37,8 +34,8 @@ public class MenuController : MonoBehaviour
 
     private void OnEnable()
     {
-        _inputReader.PauseEvent += HandlePause;
-        _inputReader.ResumeCloseMenuEvent += HandleResumeCloseMenu;
+        EventManager.OnPause += HandlePause;
+        EventManager.OnCloseMenu += HandleCloseMenu;
 
         EventManager.OnMenuStackChange += HandleMenuStackChange;
     }
@@ -60,8 +57,8 @@ public class MenuController : MonoBehaviour
 
     private void OnDisable()
     {
-        _inputReader.PauseEvent -= HandlePause;
-        _inputReader.ResumeCloseMenuEvent -= HandleResumeCloseMenu;
+        EventManager.OnPause -= HandlePause;
+        EventManager.OnCloseMenu -= HandleCloseMenu;
 
         EventManager.OnMenuStackChange -= HandleMenuStackChange;
     }
@@ -71,7 +68,7 @@ public class MenuController : MonoBehaviour
         _menuTracker.PushMenu(_pauseMenu);
     }
 
-    private void HandleResumeCloseMenu()
+    private void HandleCloseMenu()
     {
 
         MenuBase currentMenu = _menuTracker.GetMenuOnTopOfStack();
@@ -94,11 +91,11 @@ public class MenuController : MonoBehaviour
         if (nextMenu != null)
         {
             nextMenu.gameObject.SetActive(true);
-            EventManager.OnPause.Invoke(this);
+            EventManager.OnPauseGame.Invoke(this);
         }
         else
         {
-            EventManager.OnResume.Invoke(this);
+            EventManager.OnResumeGame.Invoke(this);
         }
     }
 
