@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
 
 public class SceneTransitionManager : MonoBehaviour
 {
@@ -10,7 +8,7 @@ public class SceneTransitionManager : MonoBehaviour
     private SceneTracker _sceneTracker;
 
     [SerializeField]
-    private SceneName _initialScene;
+    private SceneField _initialScene;
 
     private void OnEnable()
     {
@@ -27,22 +25,15 @@ public class SceneTransitionManager : MonoBehaviour
         EventManager.OnSceneChange -= HandleSceneChange;
     }
 
-    private void HandleSceneChange(SceneName nextScene, string gateName)
+    private void HandleSceneChange(SceneField nextScene, string gateName)
     {
-        _sceneTracker.ChangeScene(nextScene, gateName);
+        _sceneTracker.ChangeScene(nextScene.SceneName, gateName);
 
-        SceneName sceneToLoad = _sceneTracker.NextScene;
-
-        if (sceneToLoad == SceneName.None)
-        {
-            sceneToLoad = _initialScene;
-        }
-
-        Debug.Log("Handle Scene Change");
+        string sceneToLoad = _sceneTracker.NextScene ?? _initialScene.SceneName;
 
         // SceneManager.LoadScene(sceneToLoad.ToString());
 
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneToLoad.ToString(), LoadSceneMode.Single);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Single);
 
         StartCoroutine(_sceneTracker.LoadSceneAsync(operation));
     }
@@ -50,9 +41,9 @@ public class SceneTransitionManager : MonoBehaviour
     private void Init()
     {
         Scene currentScene = SceneManager.GetActiveScene();
-        SceneName currentSceneName = ConvertStringToEnum(currentScene.name);
+        string currentSceneName = currentScene.name;
 
-        _sceneTracker.SetScene(currentSceneName, SceneName.None, null);
+        _sceneTracker.SetScene(currentSceneName, null, null);
     }
 
     private SceneName ConvertStringToEnum(string nameToParse)

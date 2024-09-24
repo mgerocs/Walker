@@ -90,6 +90,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeCameraDistance"",
+                    ""type"": ""Value"",
+                    ""id"": ""e3e6f32f-443f-4f92-b54d-13a435911c14"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -312,6 +321,28 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""action"": ""HighlightInteractables"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c6d81cc5-0a08-4eae-8011-56bc5c80520d"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";KeyboardMouse"",
+                    ""action"": ""ChangeCameraDistance"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5e792126-65e8-4e24-8934-3cdf935ac290"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": ""StickDeadzone"",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""ChangeCameraDistance"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -394,6 +425,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
         m_Gameplay_OpenMenu = m_Gameplay.FindAction("OpenMenu", throwIfNotFound: true);
         m_Gameplay_HighlightInteractables = m_Gameplay.FindAction("HighlightInteractables", throwIfNotFound: true);
+        m_Gameplay_ChangeCameraDistance = m_Gameplay.FindAction("ChangeCameraDistance", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_CloseMenu = m_UI.FindAction("CloseMenu", throwIfNotFound: true);
@@ -471,6 +503,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Interact;
     private readonly InputAction m_Gameplay_OpenMenu;
     private readonly InputAction m_Gameplay_HighlightInteractables;
+    private readonly InputAction m_Gameplay_ChangeCameraDistance;
     public struct GameplayActions
     {
         private @GameInput m_Wrapper;
@@ -482,6 +515,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
         public InputAction @OpenMenu => m_Wrapper.m_Gameplay_OpenMenu;
         public InputAction @HighlightInteractables => m_Wrapper.m_Gameplay_HighlightInteractables;
+        public InputAction @ChangeCameraDistance => m_Wrapper.m_Gameplay_ChangeCameraDistance;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -512,6 +546,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @HighlightInteractables.started += instance.OnHighlightInteractables;
             @HighlightInteractables.performed += instance.OnHighlightInteractables;
             @HighlightInteractables.canceled += instance.OnHighlightInteractables;
+            @ChangeCameraDistance.started += instance.OnChangeCameraDistance;
+            @ChangeCameraDistance.performed += instance.OnChangeCameraDistance;
+            @ChangeCameraDistance.canceled += instance.OnChangeCameraDistance;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -537,6 +574,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @HighlightInteractables.started -= instance.OnHighlightInteractables;
             @HighlightInteractables.performed -= instance.OnHighlightInteractables;
             @HighlightInteractables.canceled -= instance.OnHighlightInteractables;
+            @ChangeCameraDistance.started -= instance.OnChangeCameraDistance;
+            @ChangeCameraDistance.performed -= instance.OnChangeCameraDistance;
+            @ChangeCameraDistance.canceled -= instance.OnChangeCameraDistance;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -627,6 +667,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnOpenMenu(InputAction.CallbackContext context);
         void OnHighlightInteractables(InputAction.CallbackContext context);
+        void OnChangeCameraDistance(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

@@ -13,6 +13,7 @@ public static class EventManager
     public static UnityAction OnCancelJump;
     public static UnityAction OnToggleSprint;
     public static UnityAction<Vector2> OnRotateCamera;
+    public static UnityAction<Vector2> OnChangeCameraDistance;
     public static UnityAction OnInteract;
     public static UnityAction OnCancelInteract;
     public static UnityAction OnOpenMenu;
@@ -34,7 +35,7 @@ public static class EventManager
 
     public static UnityAction<GameObject> OnPlayerSpawn;
 
-    public static UnityAction<SceneName, string> OnSceneChange;
+    public static UnityAction<SceneField, string> OnSceneChange;
 
     // SCENES
     public static UnityAction OnLoadingStart;

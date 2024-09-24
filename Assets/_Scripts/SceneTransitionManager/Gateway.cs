@@ -18,7 +18,7 @@ public class Gateway : MonoBehaviour
     private bool _isActive = true;
 
     [SerializeField]
-    private SceneName _destination;
+    private SceneField _destination;
 
     public string Name
     {

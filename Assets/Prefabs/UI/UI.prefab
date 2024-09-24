@@ -949,7 +949,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5016749809930716634}
-  - component: {fileID: 2982783828012293008}
+  - component: {fileID: 507957034154372286}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -977,7 +977,7 @@ Transform:
   - {fileID: 895680150196429220}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2982783828012293008
+--- !u!114 &507957034154372286
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -986,9 +986,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 4645608770212416413}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45b4a4e27bf2bd64994dd2f9114ac1d4, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e696ff1f5b99924abe6f58d5466c2b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _menuTracker: {fileID: 11400000, guid: a5a5379c3c674b648b0abfd5172880e7, type: 2}
+  _pauseMenu: {fileID: 2938986101797285755}
+  _settingsMenu: {fileID: 2832079607601683314}
+  _loadingScreen: {fileID: 6017098711867411889}
+  _transitionScreen: {fileID: 5629837823081282268}
+  _initalMenu: {fileID: 0}
+  _firstFocusItem: {fileID: 0}
 --- !u!1 &4812444290498209015
 GameObject:
   m_ObjectHideFlags: 0

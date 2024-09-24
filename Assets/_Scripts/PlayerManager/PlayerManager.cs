@@ -59,7 +59,7 @@ public class PlayerManager : MonoBehaviour
         }
 
         GameObject instance = Instantiate(_player, spawnPoint.gameObject.transform.position, spawnPoint.gameObject.transform.rotation);
-        EventManager.OnPlayerSpawn.Invoke(instance);
+        EventManager.OnPlayerSpawn?.Invoke(instance);
     }
 
     private SpawnPoint FindSpawnPoint()
@@ -68,7 +68,7 @@ public class PlayerManager : MonoBehaviour
 
         if (gatewaysInScene.Length == 0)
         {
-            throw new Exception("No Gateways in scene.");
+            return FindDefaultSpawnPoint();
         }
 
         if (gatewaysInScene.Length == 1)

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6308106016695868823
+--- !u!1 &6419113668435915013
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,12 +8,11 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1763661570576431967}
-  - component: {fileID: 3032446457203444940}
-  - component: {fileID: 3200340034948943711}
-  - component: {fileID: 4488993546368894577}
-  - component: {fileID: 2413368516734537638}
-  - component: {fileID: 9105859152681350739}
+  - component: {fileID: 8031719172984345067}
+  - component: {fileID: 4766358322160726780}
+  - component: {fileID: 7168228955287699136}
+  - component: {fileID: 7847007815769108685}
+  - component: {fileID: 3908889430435820419}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: Untagged
@@ -21,13 +20,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1763661570576431967
+--- !u!4 &8031719172984345067
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6308106016695868823}
+  m_GameObject: {fileID: 6419113668435915013}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -36,45 +35,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3032446457203444940
+--- !u!114 &4766358322160726780
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6308106016695868823}
+  m_GameObject: {fileID: 6419113668435915013}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 91585b9533f067f4ba8303926a0ae641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _inputTracker: {fileID: 11400000, guid: 589c05649a9c5034dae32b26bf4e2cf6, type: 2}
---- !u!114 &3200340034948943711
+--- !u!114 &7168228955287699136
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6308106016695868823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e696ff1f5b99924abe6f58d5466c2b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _menuTracker: {fileID: 11400000, guid: a5a5379c3c674b648b0abfd5172880e7, type: 2}
-  _pauseMenu: {fileID: 0}
-  _settingsMenu: {fileID: 0}
-  _loadingScreen: {fileID: 0}
-  _transitionScreen: {fileID: 0}
-  _initalMenu: {fileID: 0}
-  _firstFocusItem: {fileID: 0}
---- !u!114 &4488993546368894577
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6308106016695868823}
+  m_GameObject: {fileID: 6419113668435915013}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30e31301dfb5d6a46b22044cf47f6efe, type: 3}
@@ -83,27 +63,29 @@ MonoBehaviour:
   _playerTag: Player
   _player: {fileID: 2524690459485783703, guid: 37cd5a02f3cf93e4ea69029d850902fa, type: 3}
   _sceneTracker: {fileID: 11400000, guid: 5e5ef815fa2d99346811feab1b030674, type: 2}
---- !u!114 &2413368516734537638
+--- !u!114 &7847007815769108685
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6308106016695868823}
+  m_GameObject: {fileID: 6419113668435915013}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41552fd58d9cd7d47a33315350f6d225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneTracker: {fileID: 11400000, guid: 5e5ef815fa2d99346811feab1b030674, type: 2}
-  _initialScene: 0
---- !u!114 &9105859152681350739
+  _initialScene:
+    _sceneAsset: {fileID: 102900000, guid: fafbb3a3ea28e954484c68cb447c97f1, type: 3}
+    _sceneName: Center
+--- !u!114 &3908889430435820419
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6308106016695868823}
+  m_GameObject: {fileID: 6419113668435915013}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4bac8d0574739346a2a282b80939310, type: 3}

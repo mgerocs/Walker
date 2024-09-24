@@ -107,6 +107,14 @@ public class InputTracker : ScriptableObject, GameInput.IGameplayActions, GameIn
             EventManager.OnCancelHighlightInteractables?.Invoke();
         }
     }
+
+    public void OnChangeCameraDistance(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            EventManager.OnChangeCameraDistance?.Invoke(context.ReadValue<Vector2>());
+        }
+    }
     #endregion
 
     #region UI event handlers
