@@ -188,7 +188,7 @@ GameObject:
   - component: {fileID: 7942234690433712533}
   - component: {fileID: 6349821923170150290}
   - component: {fileID: 8486727739228301191}
-  - component: {fileID: 4218027949196446239}
+  - component: {fileID: 1865887065084201651}
   m_Layer: 0
   m_Name: PlayerFollowCamera
   m_TagString: Untagged
@@ -230,8 +230,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 1590869576802308440, guid: 305506e791c13814998128ce61f9db47, type: 3}
-  m_Follow: {fileID: 1590869576802308440, guid: 305506e791c13814998128ce61f9db47, type: 3}
+  m_LookAt: {fileID: 0}
+  m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 40
     OrthographicSize: 10
@@ -303,7 +303,7 @@ MonoBehaviour:
   m_Damping: 0
   m_DampingWhenOccluded: 0
   m_OptimalTargetDistance: 0
---- !u!114 &4218027949196446239
+--- !u!114 &1865887065084201651
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -316,7 +316,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotationX: 10
-  _rotationSpeed: 150
+  _rotationSpeed: 5
   _zoomSpeed: 50
   _minDistance: 1.5
   _maxDistance: 6

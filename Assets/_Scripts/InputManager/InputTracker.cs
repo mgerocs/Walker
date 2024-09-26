@@ -48,6 +48,11 @@ public class InputTracker : ScriptableObject, GameInput.IGameplayActions, GameIn
         EventManager.OnMove?.Invoke(context.ReadValue<Vector2>());
     }
 
+    public void OnLook(InputAction.CallbackContext context)
+    {
+        EventManager.OnLook?.Invoke(context.ReadValue<Vector2>());
+    }
+
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
@@ -67,11 +72,6 @@ public class InputTracker : ScriptableObject, GameInput.IGameplayActions, GameIn
         {
             EventManager.OnToggleSprint?.Invoke();
         }
-    }
-
-    public void OnRotateCamera(InputAction.CallbackContext context)
-    {
-        EventManager.OnRotateCamera?.Invoke(context.ReadValue<Vector2>());
     }
 
     public void OnInteract(InputAction.CallbackContext context)
@@ -108,11 +108,11 @@ public class InputTracker : ScriptableObject, GameInput.IGameplayActions, GameIn
         }
     }
 
-    public void OnChangeCameraDistance(InputAction.CallbackContext context)
+    public void OnZoom(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            EventManager.OnChangeCameraDistance?.Invoke(context.ReadValue<Vector2>());
+            EventManager.OnZoom?.Invoke(context.ReadValue<float>());
         }
     }
     #endregion

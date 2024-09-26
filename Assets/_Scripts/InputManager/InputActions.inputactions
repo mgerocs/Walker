@@ -15,6 +15,24 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Look",
+                    "type": "Value",
+                    "id": "926a0279-4617-4953-8918-9e49afb99d07",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Zoom",
+                    "type": "Value",
+                    "id": "e3e6f32f-443f-4f92-b54d-13a435911c14",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Jump",
                     "type": "Button",
                     "id": "11066291-aac5-4fc1-b5ae-fdf4e859eaef",
@@ -31,15 +49,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "RotateCamera",
-                    "type": "Value",
-                    "id": "b873b1ec-dfe0-4298-bd07-56122c203177",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 },
                 {
                     "name": "Interact",
@@ -67,15 +76,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "ChangeCameraDistance",
-                    "type": "Value",
-                    "id": "e3e6f32f-443f-4f92-b54d-13a435911c14",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -147,6 +147,28 @@
                 },
                 {
                     "name": "",
+                    "id": "40eda940-7d71-44e8-84e8-b1e5e20e3158",
+                    "path": "<Pointer>/delta",
+                    "interactions": "",
+                    "processors": "InvertVector2(invertX=false),ScaleVector2(x=0.05,y=0.05)",
+                    "groups": "KeyboardMouse",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6702ae0a-c4ae-4843-86a8-aca185d51664",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "StickDeadzone,InvertVector2(invertX=false,invertY=false),ScaleVector2(x=300,y=300)",
+                    "groups": "Gamepad",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "e23b5543-44b8-4821-b7c8-15304d426459",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
@@ -212,50 +234,6 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "QE",
-                    "id": "40d670bd-17af-41be-932d-8a9c7e4eb5d4",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "RotateCamera",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "left",
-                    "id": "621e2bdc-908d-47a6-af60-75c9c520c8bd",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";KeyboardMouse",
-                    "action": "RotateCamera",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "6ed2f464-1025-4020-94da-324eef6ce079",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";KeyboardMouse",
-                    "action": "RotateCamera",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "b58ea369-5d0f-42e5-9faf-8712ae115673",
-                    "path": "<Gamepad>/rightStick",
-                    "interactions": "",
-                    "processors": "StickDeadzone",
-                    "groups": ";Gamepad",
-                    "action": "RotateCamera",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
                     "name": "",
                     "id": "cc5daff7-46e0-42d9-8b8c-1ce20479a8e7",
                     "path": "<Keyboard>/f",
@@ -301,23 +279,23 @@
                 },
                 {
                     "name": "",
-                    "id": "c6d81cc5-0a08-4eae-8011-56bc5c80520d",
-                    "path": "<Mouse>/scroll",
+                    "id": "8a88b016-92fc-4334-bdc9-381b222cd0a0",
+                    "path": "<Mouse>/scroll/y",
                     "interactions": "",
                     "processors": "",
                     "groups": ";KeyboardMouse",
-                    "action": "ChangeCameraDistance",
+                    "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "5e792126-65e8-4e24-8934-3cdf935ac290",
-                    "path": "<Gamepad>/rightStick",
+                    "id": "aa0d3603-a681-43f8-91f1-027970d34a6f",
+                    "path": "<Gamepad>/dpad/y",
                     "interactions": "",
                     "processors": "StickDeadzone",
                     "groups": ";Gamepad",
-                    "action": "ChangeCameraDistance",
+                    "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

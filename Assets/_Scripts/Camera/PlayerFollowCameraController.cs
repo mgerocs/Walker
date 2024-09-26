@@ -7,75 +7,54 @@ using UnityEngine;
 public class PlayerFollowCameraController : MonoBehaviour
 {
     [SerializeField]
-    private float _rotationX = 10f;
-    [SerializeField]
-    private float _rotationSpeed = 150f;
+    private float[] _zoomLevels = new float[] { 1.5f, 3f, 4.5f, 6f, 7.5f };
     [SerializeField]
     private float _zoomSpeed = 50f;
-    [SerializeField]
-    private float _minDistance = 1.5f;
-    [SerializeField]
-    private float _maxDistance = 6f;
-    [SerializeField]
-    private float _initialDistance = 7f;
 
-    private CinemachineVirtualCamera _vcam;
-    private CinemachineFramingTransposer _vcamFramingTransposer;
+    private CinemachineVirtualCamera _cinemachineVirtualCamera;
+    private Cinemachine3rdPersonFollow _cinemachine3rdPersonFollow;
 
-    private float _rotate;
+    private CameraRoot _target;
+
+    private float _zoomDirection;
+
+    private int _currentZoomIndex = 2;
+    private float _currentZoomDistance;
+    private float _targetZoomDistance;
+    private float _zoomVelocity = 0f;
 
     private void OnEnable()
     {
-        _vcam = gameObject.GetComponent<CinemachineVirtualCamera>();
+        _cinemachineVirtualCamera = gameObject.GetComponent<CinemachineVirtualCamera>();
 
-        if (_vcam != null)
+        if (_cinemachineVirtualCamera != null)
         {
-            Transform cameraTransform = _vcam.transform;
-            Vector3 currentRotation = cameraTransform.eulerAngles;
+            _cinemachine3rdPersonFollow = _cinemachineVirtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
 
-            cameraTransform.rotation = Quaternion.Euler(_rotationX, 0, 0);
-
-            _vcamFramingTransposer = _vcam.GetCinemachineComponent<CinemachineFramingTransposer>();
-
-            if (_vcamFramingTransposer != null)
+            if (_cinemachine3rdPersonFollow != null)
             {
-                _vcamFramingTransposer.m_CameraDistance = _initialDistance;
+                _currentZoomDistance = _zoomLevels[_currentZoomIndex];
+                _targetZoomDistance = _currentZoomDistance;
             }
         }
 
-        EventManager.OnRotateCamera += HandleRotateCamera;
-        EventManager.OnChangeCameraDistance += HandleChangeCameraDistance;
-
         EventManager.OnPlayerSpawn += HandlePlayerSpawn;
+
+        EventManager.OnZoom += HandleZoom;
+    }
+
+    private void Update()
+    {
+        if (_zoomDirection == 0) return;
+
+        SmoothZoom();
     }
 
     private void OnDisable()
     {
-        EventManager.OnRotateCamera -= HandleRotateCamera;
-        EventManager.OnChangeCameraDistance -= HandleChangeCameraDistance;
-
         EventManager.OnPlayerSpawn -= HandlePlayerSpawn;
-    }
 
-    private void LateUpdate()
-    {
-        RotateCamera();
-    }
-
-    private void HandleRotateCamera(Vector2 direction)
-    {
-        _rotate = direction.x;
-    }
-
-    private void HandleChangeCameraDistance(Vector2 scrollValue)
-    {
-        float scrollAmount = scrollValue.y;
-
-        if (_vcamFramingTransposer == null) return;
-
-        // Adjust the camera distance from the player by modifying the Camera Distance
-        float newDistance = _vcamFramingTransposer.m_CameraDistance - scrollAmount * _zoomSpeed * Time.deltaTime;
-        _vcamFramingTransposer.m_CameraDistance = Mathf.Clamp(newDistance, _minDistance, _maxDistance);
+        EventManager.OnZoom -= HandleZoom;
     }
 
     private void HandlePlayerSpawn(GameObject player)
@@ -85,47 +64,55 @@ public class PlayerFollowCameraController : MonoBehaviour
             throw new Exception("There is no Player");
         }
 
-        if (_vcam == null)
+        if (_cinemachineVirtualCamera == null)
         {
             throw new Exception("There is no Virtual Camera.");
         }
 
         CameraRoot cameraRoot = player.GetComponentInChildren<CameraRoot>();
 
-        Debug.Log("Camera Root" + cameraRoot.transform);
-
         if (cameraRoot == null)
         {
             throw new Exception("There is no Camera Root.");
         }
 
-        _vcam.Follow = cameraRoot.transform;
-        _vcam.LookAt = cameraRoot.transform;
+        _target = cameraRoot;
 
-        Vector3 currentRotation = _vcam.transform.rotation.eulerAngles;
+        _cinemachineVirtualCamera.Follow = _target.transform;
+        _cinemachineVirtualCamera.LookAt = _target.transform;
+
+        Vector3 currentRotation = _cinemachineVirtualCamera.transform.rotation.eulerAngles;
 
         Vector3 newRotation = player.transform.eulerAngles;
 
-        Quaternion targetRotation = Quaternion.Euler(currentRotation.x, newRotation.y, currentRotation.z);
-
-        _vcam.transform.rotation = targetRotation;
+        _cinemachineVirtualCamera.transform.rotation = Quaternion.Euler(currentRotation.x, newRotation.y, currentRotation.z);
     }
 
-    private void RotateCamera()
+    private void HandleZoom(float newZoomDirection)
     {
-        if (_vcam == null) return;
+        _zoomDirection = newZoomDirection;
 
-        if (_rotate == 0) return;
+        SetZoomLevel();
+    }
 
-        // Get the current Euler angles
-        Vector3 currentRotation = _vcam.transform.rotation.eulerAngles;
+    private void SetZoomLevel()
+    {
+        if (_zoomDirection > 0f && _currentZoomIndex > 0)
+        {
+            _currentZoomIndex--;
+            _targetZoomDistance = _zoomLevels[_currentZoomIndex];
+        }
+        else if (_zoomDirection < 0f && _currentZoomIndex < _zoomLevels.Length - 1)
+        {
+            _currentZoomIndex++;
+            _targetZoomDistance = _zoomLevels[_currentZoomIndex];
+        }
+    }
 
-        // Calculate the new Y rotation
-        float newYRotation = currentRotation.y + (_rotate * _rotationSpeed * Time.deltaTime);
-
-        // Create a new Quaternion with the current X and Z rotation, and the updated Y rotation
-        Quaternion targetRotation = Quaternion.Euler(currentRotation.x, newYRotation, currentRotation.z);
-
-        _vcam.transform.rotation = targetRotation;
+    private void SmoothZoom()
+    {
+        // Smoothly transition between the current zoom distance and the target zoom distance
+        _currentZoomDistance = Mathf.SmoothDamp(_currentZoomDistance, _targetZoomDistance, ref _zoomVelocity, _zoomSpeed * Time.unscaledDeltaTime);
+        _cinemachine3rdPersonFollow.CameraDistance = _currentZoomDistance;
     }
 }

@@ -9,11 +9,11 @@ public static class EventManager
 
     #region Input events
     public static UnityAction<Vector2> OnMove;
+    public static UnityAction<Vector2> OnLook;
+    public static UnityAction<float> OnZoom;
     public static UnityAction OnJump;
     public static UnityAction OnCancelJump;
     public static UnityAction OnToggleSprint;
-    public static UnityAction<Vector2> OnRotateCamera;
-    public static UnityAction<Vector2> OnChangeCameraDistance;
     public static UnityAction OnInteract;
     public static UnityAction OnCancelInteract;
     public static UnityAction OnOpenMenu;

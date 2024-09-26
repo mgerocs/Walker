@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace StarterAssets
@@ -7,6 +8,7 @@ namespace StarterAssets
 		[Header("Character Input Values")]
 		public Vector2 move;
 		public Vector2 look;
+		public float zoom;
 		public bool jump;
 		public bool sprint;
 		public Vector2 rotate;
@@ -14,6 +16,10 @@ namespace StarterAssets
 		private void OnEnable()
 		{
 			EventManager.OnMove += HandleMove;
+
+			EventManager.OnLook += HandleLook;
+
+			EventManager.OnZoom += HandleZoom;
 
 			EventManager.OnJump += HandleJump;
 			EventManager.OnCancelJump += HandleJumpCanceled;
@@ -25,15 +31,29 @@ namespace StarterAssets
 		{
 			EventManager.OnMove -= HandleMove;
 
+			EventManager.OnLook -= HandleLook;
+
+			EventManager.OnZoom -= HandleZoom;
+
 			EventManager.OnJump -= HandleJump;
 			EventManager.OnCancelJump -= HandleJumpCanceled;
 
 			EventManager.OnToggleSprint -= HandleToggleSprint;
 		}
 
-		private void HandleMove(Vector2 direction)
+		private void HandleMove(Vector2 newDirection)
 		{
-			move = direction;
+			move = newDirection;
+		}
+
+		public void HandleLook(Vector2 newLookDirection)
+		{
+			look = newLookDirection;
+		}
+
+		private void HandleZoom(float newScrollDirection)
+		{
+			zoom = newScrollDirection;
 		}
 
 		private void HandleJump()

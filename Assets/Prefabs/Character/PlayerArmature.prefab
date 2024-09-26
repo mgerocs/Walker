@@ -871,10 +871,12 @@ MonoBehaviour:
   CinemachineCameraTarget: {fileID: 4611586090497082578}
   TopClamp: 70
   BottomClamp: -30
-  CameraAngleOverride: 0
+  CameraAngleOverride: 10
+  LookSensitivity: 5
   LockCameraPosition: 0
   move: {x: 0, y: 0}
   look: {x: 0, y: 0}
+  zoom: {x: 0, y: 0}
   jump: 0
   sprint: 0
 --- !u!114 &552126418752317814
@@ -908,6 +910,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   move: {x: 0, y: 0}
   look: {x: 0, y: 0}
+  zoom: 0
   jump: 0
   sprint: 0
   rotate: {x: 0, y: 0}

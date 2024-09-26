@@ -72,6 +72,9 @@ public class GameMaster : MonoBehaviour
         Time.timeScale = 0;
 
         _inputTracker.SetUI();
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void Resume()
@@ -79,5 +82,8 @@ public class GameMaster : MonoBehaviour
         Time.timeScale = 1;
 
         _inputTracker.SetGameplay();
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }
