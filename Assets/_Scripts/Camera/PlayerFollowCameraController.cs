@@ -7,12 +7,12 @@ using UnityEngine;
 public class PlayerFollowCameraController : MonoBehaviour
 {
     [SerializeField]
+    private SceneTracker _sceneTracker;
+
+    [SerializeField]
     private float[] _zoomLevels = new float[] { 1.5f, 3f, 4.5f, 6f, 7.5f };
     [SerializeField]
     private float _zoomSpeed = 50f;
-
-    [SerializeField]
-    private SceneTracker _sceneTracker;
 
     private CinemachineVirtualCamera _cinemachineVirtualCamera;
     private Cinemachine3rdPersonFollow _cinemachine3rdPersonFollow;
@@ -41,7 +41,7 @@ public class PlayerFollowCameraController : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.OnSpawnPlayer += HandlePlayerSpawn;
+        EventManager.OnPlayerSpawned += HandlePlayerSpawned;
 
         EventManager.OnZoom += HandleZoom;
     }
@@ -55,12 +55,12 @@ public class PlayerFollowCameraController : MonoBehaviour
 
     private void OnDisable()
     {
-        EventManager.OnSpawnPlayer -= HandlePlayerSpawn;
+        EventManager.OnPlayerSpawned -= HandlePlayerSpawned;
 
         EventManager.OnZoom -= HandleZoom;
     }
 
-    private void HandlePlayerSpawn(GameObject player)
+    private void HandlePlayerSpawned(GameObject player)
     {
         if (player == null)
         {
@@ -92,18 +92,17 @@ public class PlayerFollowCameraController : MonoBehaviour
 
         if (_cinemachine3rdPersonFollow != null)
         {
-            SceneNode currentSceneNode = _sceneTracker.CurrentScene;
+            SceneData currentScene = _sceneTracker.CurrentScene;
 
-            if (currentSceneNode != null)
+            if (currentScene != null)
             {
-                _currentZoomIndex = currentSceneNode.SceneType == SceneType.INDOORS ? INDOORS_ZOOM_INDEX : OUTDOORS_ZOOM_INDEX;
+                _currentZoomIndex = currentScene.SceneType == SceneType.INDOORS ? INDOORS_ZOOM_INDEX : OUTDOORS_ZOOM_INDEX;
 
                 _currentZoomDistance = _zoomLevels[_currentZoomIndex];
                 _targetZoomDistance = _currentZoomDistance;
 
                 _cinemachine3rdPersonFollow.CameraDistance = _currentZoomDistance;
             }
-
         }
     }
 

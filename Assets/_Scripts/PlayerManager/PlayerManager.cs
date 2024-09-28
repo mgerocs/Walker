@@ -5,20 +5,15 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField]
+    private SceneTracker _sceneTracker;
+
+    [SerializeField]
     private string _playerTag;
 
     [SerializeField]
     private GameObject _player;
 
-    [SerializeField]
-    private SceneTracker _sceneTracker;
-
-    public void Init()
-    {
-        SpawnPlayer();
-    }
-
-    private void SpawnPlayer()
+    public void SpawnPlayer()
     {
         if (_player == null)
         {
@@ -43,7 +38,7 @@ public class PlayerManager : MonoBehaviour
         }
 
         GameObject instance = Instantiate(_player, spawnPoint.gameObject.transform.position, spawnPoint.gameObject.transform.rotation);
-        EventManager.OnSpawnPlayer?.Invoke(instance);
+        EventManager.OnPlayerSpawned?.Invoke(instance);
     }
 
     private SpawnPoint FindSpawnPoint()
@@ -60,11 +55,11 @@ public class PlayerManager : MonoBehaviour
             return gatewaysInScene[0].SpawnPoint;
         }
 
-        string prevGatewayName = _sceneTracker.GatewayName;
+        string lastGatewayName = _sceneTracker.LastGatewayName;
 
-        if (prevGatewayName != null)
+        if (lastGatewayName != null)
         {
-            Gateway targetGateway = gatewaysInScene.FirstOrDefault(gw => gw.Name == prevGatewayName);
+            Gateway targetGateway = gatewaysInScene.FirstOrDefault(gw => gw.GatewayName == lastGatewayName);
 
             if (targetGateway != null)
             {

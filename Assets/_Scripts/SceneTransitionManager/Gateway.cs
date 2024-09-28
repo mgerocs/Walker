@@ -18,9 +18,9 @@ public class Gateway : MonoBehaviour
     private bool _isActive = true;
 
     [SerializeField]
-    private SceneField _destination;
+    private SceneData _destination;
 
-    public string Name
+    public string GatewayName
     {
         get { return _name; }
     }
@@ -28,6 +28,11 @@ public class Gateway : MonoBehaviour
     public SpawnPoint SpawnPoint
     {
         get { return _spawnPoint; }
+    }
+
+    public SceneData Destination
+    {
+        get { return _destination; }
     }
 
     public bool IsActive
@@ -41,7 +46,7 @@ public class Gateway : MonoBehaviour
 
         if (!other.CompareTag(playerTag)) return;
 
-        EventManager.OnChangeScene?.Invoke(_destination, _name);
+        GameMaster.Instance.SceneTransitionManager.ExitScene(_destination, _name);
     }
 
     private void OnTriggerExit(Collider other)

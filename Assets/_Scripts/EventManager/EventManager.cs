@@ -25,12 +25,18 @@ public static class EventManager
     public static UnityAction OnCloseMenu;
     #endregion
 
-    public static UnityAction OnPauseGame;
-    public static UnityAction OnResumeGame;
+    public static UnityAction PauseGame;
+    public static UnityAction ResumeGame;
 
-    public static UnityAction<GameObject> OnSpawnPlayer;
-    public static UnityAction<SceneField, string> OnChangeScene;
+
+    // UI
     public static UnityAction<MenuBase> OnChangeMenu;
+
+    // PLAYER
+    public static UnityAction<GameObject> OnPlayerSpawned;
+
+    // SCENE
+    public static UnityAction OnSceneLoaded;
 
     // SCENES
     public static UnityAction OnLoadingStart;

@@ -5,9 +5,9 @@ using UnityEngine.UI;
 public class WorldMap : MenuBase
 {
     [SerializeField]
-    private World _world;
-    [SerializeField]
     private SceneTracker _sceneTracker;
+    [SerializeField]
+    private World _world;
     [SerializeField]
     private GameObject _areaButtonPrefab;   // A button prefab for each Area
     [SerializeField]
@@ -17,17 +17,16 @@ public class WorldMap : MenuBase
     [SerializeField]
     private Transform _scenePanel;          // The parent panel where scene buttons will go
 
-    private AreaNode _selectedArea;
-
-    private SceneNode _currentSceneNode;
+    private SceneData _currentScene;
 
     private void OnEnable()
     {
-        _currentSceneNode = _sceneTracker.CurrentScene;
-        Debug.Log(_currentSceneNode);
+        _currentScene = _sceneTracker.CurrentScene;
+
+        Init();
     }
 
-    private void Start()
+    private void Init()
     {
         GenerateUI();
     }
@@ -45,25 +44,21 @@ public class WorldMap : MenuBase
         }
 
         // Loop through each area and create a button for it
-        foreach (AreaNode areaNode in _world.Areas)
+        foreach (Area area in _world.Areas)
         {
             // Instantiate the area button
             GameObject areaButtonObj = Instantiate(_areaButtonPrefab, _areaPanel);
             Button areaButton = areaButtonObj.GetComponent<Button>();
             TextMeshProUGUI areaButtonText = areaButtonObj.GetComponentInChildren<TextMeshProUGUI>();
-            areaButtonText.text = areaNode.AreaName;
+            areaButtonText.text = area.AreaName;
 
             // Assign a click event to the button to display scenes for the selected area
-            areaButton.onClick.AddListener(() => DisplayScenesForArea(areaNode));
+            areaButton.onClick.AddListener(() => DisplayScenesForArea(area));
         }
     }
 
-    private void DisplayScenesForArea(AreaNode areaNode)
+    private void DisplayScenesForArea(Area area)
     {
-        if (_selectedArea == areaNode) return;
-
-        _selectedArea = areaNode;
-
         // Clear the current scenes
         foreach (Transform child in _scenePanel)
         {
@@ -71,25 +66,28 @@ public class WorldMap : MenuBase
         }
 
         // Loop through each scene in the selected area and create buttons
-        foreach (SceneNode sceneNode in areaNode.Scenes)
+        foreach (SceneData scene in area.Scenes)
         {
             // Instantiate the scene button
             GameObject sceneButtonObj = Instantiate(_sceneButtonPrefab, _scenePanel);
             TextMeshProUGUI sceneButtonText = sceneButtonObj.GetComponentInChildren<TextMeshProUGUI>();
-            sceneButtonText.text = sceneNode.SceneTitle;
+            sceneButtonText.text = scene.SceneTitle;
 
-            Button button = sceneButtonObj.GetComponent<Button>();
+            if (_currentScene != null)
+            {
+                Button button = sceneButtonObj.GetComponent<Button>();
 
-            button.interactable = _currentSceneNode.SceneField.SceneName != sceneNode.SceneField.SceneName;
+                button.interactable = _currentScene.SceneField.SceneName != scene.SceneField.SceneName;
+            }
 
             // Add a click event to the scene button (e.g., load scene or some action)
             Button sceneButton = sceneButtonObj.GetComponent<Button>();
-            sceneButton.onClick.AddListener(() => OnSceneSelected(sceneNode.SceneField));
+            sceneButton.onClick.AddListener(() => OnSceneSelected(scene));
         }
     }
 
-    private void OnSceneSelected(SceneField scene)
+    private void OnSceneSelected(SceneData nextScene)
     {
-        EventManager.OnChangeScene?.Invoke(scene, null);
+        GameMaster.Instance.SceneTransitionManager.FastTravel(nextScene);
     }
 }

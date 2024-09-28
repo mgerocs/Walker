@@ -4,20 +4,18 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MenuTracker", menuName = "Scriptable Objects/MenuTracker")]
 public class MenuTracker : ScriptableObject
 {
-    public List<MenuBase> MenuList { get; set; }
-
-    public Stack<MenuBase> MenuStack { get; private set; } = new();
+    private Stack<MenuBase> _menuStack = new();
 
     public int StackCount()
     {
-        return MenuStack.Count;
+        return _menuStack.Count;
     }
 
     public MenuBase GetMenuOnTopOfStack()
     {
-        if (MenuStack.Count > 0)
+        if (_menuStack.Count > 0)
         {
-            return MenuStack.Peek();
+            return _menuStack.Peek();
         }
         else
         {
@@ -27,21 +25,21 @@ public class MenuTracker : ScriptableObject
 
     public bool IsMenuInStack(MenuBase menu)
     {
-        return MenuStack.Contains(menu);
+        return _menuStack.Contains(menu);
     }
 
     public bool IsMenuOnTopOfStack(MenuBase menu)
     {
-        return MenuStack.Count > 0 && menu == MenuStack.Peek();
+        return _menuStack.Count > 0 && menu == _menuStack.Peek();
     }
 
     public void PushMenu(MenuBase nextMenu)
     {
         nextMenu.Enter();
 
-        if (MenuStack.Count > 0)
+        if (_menuStack.Count > 0)
         {
-            MenuBase prevMenu = MenuStack.Peek();
+            MenuBase prevMenu = _menuStack.Peek();
 
             if (prevMenu.ExitOnNewPagePush)
             {
@@ -49,20 +47,20 @@ public class MenuTracker : ScriptableObject
             }
         }
 
-        MenuStack.Push(nextMenu);
+        _menuStack.Push(nextMenu);
     }
 
     public void PopMenu()
     {
-        if (MenuStack.Count > 0)
+        if (_menuStack.Count > 0)
         {
-            MenuBase prevMenu = MenuStack.Pop();
+            MenuBase prevMenu = _menuStack.Pop();
 
             prevMenu.Exit();
 
-            if (MenuStack.Count > 0)
+            if (_menuStack.Count > 0)
             {
-                MenuBase nextMenu = MenuStack.Peek();
+                MenuBase nextMenu = _menuStack.Peek();
 
                 if (nextMenu.ExitOnNewPagePush)
                 {
@@ -78,6 +76,12 @@ public class MenuTracker : ScriptableObject
 
     public void PopAllMenus()
     {
-        MenuStack = new();
+        for (int i = 0; i < _menuStack.Count; i++)
+        {
+            MenuBase menu = _menuStack.Peek();
+            menu.Exit();
+        }
+
+        _menuStack = new();
     }
 }

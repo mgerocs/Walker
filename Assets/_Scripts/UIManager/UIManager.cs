@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -46,8 +47,15 @@ public class UIManager : MonoBehaviour
         _menus = FindObjectsByType<MenuBase>(FindObjectsSortMode.None);
     }
 
+    private void Start()
+    {
+        Init();
+    }
+
     private void OnEnable()
     {
+        SceneManager.sceneLoaded += HandleSceneLoaded;
+
         EventManager.OnOpenPauseMenu += HandleOpenPauseMenu;
         EventManager.OnCloseMenu += HandleCloseMenu;
 
@@ -61,6 +69,8 @@ public class UIManager : MonoBehaviour
 
     private void OnDisable()
     {
+        SceneManager.sceneLoaded -= HandleSceneLoaded;
+
         EventManager.OnOpenPauseMenu -= HandleOpenPauseMenu;
         EventManager.OnCloseMenu -= HandleCloseMenu;
 
@@ -70,6 +80,11 @@ public class UIManager : MonoBehaviour
 
         EventManager.OnLoadingStart -= HandleLoadingStart;
         EventManager.OnLoadingFinish -= HandleLoadingFinish;
+    }
+
+    private void HandleSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        Init();
     }
 
     public void Init()
@@ -145,18 +160,16 @@ public class UIManager : MonoBehaviour
     {
         foreach (MenuBase menu in _menus)
         {
-            bool isActive = _menuTracker.IsMenuOnTopOfStack(menu);
-
-            menu.gameObject.SetActive(isActive);
+            menu.gameObject.SetActive(menu.IsActive);
         }
 
         if (_menuTracker.StackCount() > 0)
         {
-            EventManager.OnPauseGame?.Invoke();
+            EventManager.PauseGame?.Invoke();
         }
         else
         {
-            EventManager.OnResumeGame?.Invoke();
+            EventManager.ResumeGame?.Invoke();
         }
     }
 }

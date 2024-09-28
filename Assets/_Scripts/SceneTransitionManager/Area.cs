@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
 [System.Serializable]
-public class AreaNode
+public class Area
 {
     public string AreaName;
-    public List<SceneNode> Scenes;
+    public List<SceneData> Scenes;
 }

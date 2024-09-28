@@ -1,7 +1,5 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameMaster : MonoBehaviour
 {
@@ -21,11 +19,11 @@ public class GameMaster : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Persist GameManager and its components
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Destroy(gameObject); // Destroy duplicate GameManager objects
+            Destroy(gameObject);
         }
 
         SceneTransitionManager = GetComponentInChildren<SceneTransitionManager>();
@@ -44,10 +42,8 @@ public class GameMaster : MonoBehaviour
 
     private void OnEnable()
     {
-        SceneManager.sceneLoaded += HandleSceneLoaded;
-
-        EventManager.OnPauseGame += HandlePauseGame;
-        EventManager.OnResumeGame += HandleResumeGame;
+        EventManager.PauseGame += HandlePauseGame;
+        EventManager.ResumeGame += HandleResumeGame;
     }
 
     private void Start()
@@ -57,10 +53,8 @@ public class GameMaster : MonoBehaviour
 
     private void OnDisable()
     {
-        SceneManager.sceneLoaded -= HandleSceneLoaded;
-
-        EventManager.OnPauseGame -= HandlePauseGame;
-        EventManager.OnResumeGame -= HandleResumeGame;
+        EventManager.PauseGame -= HandlePauseGame;
+        EventManager.ResumeGame -= HandleResumeGame;
     }
 
     public void Init()
@@ -71,21 +65,6 @@ public class GameMaster : MonoBehaviour
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-
-        SceneTransitionManager.Init();
-        PlayerManager.Init();
-
-        UIManager uIManager = FindFirstObjectByType<UIManager>();
-
-        if (uIManager != null)
-        {
-            uIManager.Init();
-        }
-    }
-
-    private void HandleSceneLoaded(Scene arg0, LoadSceneMode arg1)
-    {
-        Init();
     }
 
     private void HandlePauseGame()

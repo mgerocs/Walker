@@ -1,66 +1,96 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneTransitionManager : MonoBehaviour
 {
     [SerializeField]
-    private World _world;
-
-    [SerializeField]
     private SceneTracker _sceneTracker;
 
     [SerializeField]
-    private SceneField _initialScene;
+    private SceneData _initialScene;
 
     private void OnEnable()
     {
-        EventManager.OnChangeScene += HandleChangeScene;
+        SceneManager.sceneLoaded += HandleSceneLoaded;
+    }
+
+    private void Start()
+    {
+        if (_initialScene == null)
+        {
+            throw new Exception("No Initial Scene set.");
+        }
+
+        _sceneTracker.CurrentScene = _initialScene;
+        _sceneTracker.LastGatewayName = null;
+
+        Init();
     }
 
     private void OnDisable()
     {
-        EventManager.OnChangeScene -= HandleChangeScene;
+        SceneManager.sceneLoaded -= HandleSceneLoaded;
+    }
+
+    private void HandleSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        Init();
     }
 
     public void Init()
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        SceneNode currentSceneNode = _world.GetSceneNodeBySceneName(currentScene.name);
-
-        if (currentSceneNode != null)
-        {
-            _sceneTracker.SetScene(currentSceneNode, null, null);
-        }
+        GameMaster.Instance.PlayerManager.SpawnPlayer();
     }
 
-    private void HandleChangeScene(SceneField nextScene, string gateName)
-
+    private void LoadScene(string sceneToLoad)
     {
-        SceneNode sceneNode = _world.GetSceneNodeBySceneName(nextScene.SceneName);
-
-        _sceneTracker.ChangeScene(sceneNode, gateName);
-
-        string sceneToLoad = _sceneTracker.NextScene.SceneField.SceneName ?? _initialScene.SceneName;
-
-        // SceneManager.LoadScene(sceneToLoad.ToString());
-
         EventManager.OnLoadingStart?.Invoke();
 
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Single);
 
-        StartCoroutine(_sceneTracker.LoadSceneAsync(operation));
+        StartCoroutine(LoadSceneAsync(operation));
     }
 
-    private SceneName ConvertStringToEnum(string nameToParse)
+    private IEnumerator LoadSceneAsync(AsyncOperation operation)
     {
-        if (Enum.TryParse(nameToParse, out SceneName sceneName))
+        EventManager.OnLoadingStart?.Invoke();
+
+        while (!operation.isDone)
         {
-            return sceneName;
+            float progress = Mathf.Clamp01(operation.progress / 0.9f);
+
+            EventManager.OnLoadingProgress?.Invoke(progress);
+
+            yield return null;
         }
-        else
+
+        if (operation.isDone)
         {
-            throw new Exception("Scene is not in list of scenes.");
+            EventManager.OnLoadingFinish?.Invoke();
         }
+    }
+
+    public void ExitScene(SceneData destination, string lastGatewayName)
+    {
+        _sceneTracker.LastGatewayName = lastGatewayName;
+
+        _sceneTracker.CurrentScene = destination;
+
+        //  SceneManager.LoadScene(_sceneTracker.CurrentScene.SceneField.SceneName);
+
+        LoadScene(_sceneTracker.CurrentScene.SceneField.SceneName);
+    }
+
+    public void FastTravel(SceneData scene)
+    {
+        _sceneTracker.CurrentScene = scene;
+
+        _sceneTracker.LastGatewayName = null;
+
+        //SceneManager.LoadScene(_sceneTracker.CurrentScene.SceneField.SceneName);
+
+        LoadScene(scene.SceneField.SceneName);
     }
 }

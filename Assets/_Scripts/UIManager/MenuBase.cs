@@ -12,14 +12,16 @@ public class MenuBase : MonoBehaviour, IMenu
 
     public bool CanBeClosed => _canBeClosed;
 
+    public bool IsActive { get; private set; }
+
     public virtual void Enter()
     {
-
+        IsActive = true;
     }
 
     public virtual void Exit()
     {
-
+        IsActive = false;
     }
 
     public void LoadMenu(MenuBase menu)
