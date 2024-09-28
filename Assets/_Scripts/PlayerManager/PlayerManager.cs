@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -14,27 +13,12 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private SceneTracker _sceneTracker;
 
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += HandleSceneLoaded;
-    }
-
-    private void Start()
+    public void Init()
     {
         SpawnPlayer();
     }
 
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= HandleSceneLoaded;
-    }
-
-    private void HandleSceneLoaded(Scene arg0, LoadSceneMode arg1)
-    {
-        SpawnPlayer();
-    }
-
-    public void SpawnPlayer()
+    private void SpawnPlayer()
     {
         if (_player == null)
         {
@@ -59,7 +43,7 @@ public class PlayerManager : MonoBehaviour
         }
 
         GameObject instance = Instantiate(_player, spawnPoint.gameObject.transform.position, spawnPoint.gameObject.transform.rotation);
-        EventManager.OnPlayerSpawn?.Invoke(instance);
+        EventManager.OnSpawnPlayer?.Invoke(instance);
     }
 
     private SpawnPoint FindSpawnPoint()

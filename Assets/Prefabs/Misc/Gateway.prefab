@@ -66,10 +66,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecd20429d5c296744a36842158f177d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneDescriptor: {fileID: 11400000, guid: 19e45b37b981a0c40ba60f9964bde9e9, type: 2}
-  _sceneTracker: {fileID: 11400000, guid: 5e5ef815fa2d99346811feab1b030674, type: 2}
+  _name: A
   _spawnPoint: {fileID: 0}
   playerTag: Player
   _color: {r: 0, g: 1, b: 0, a: 1}
   _isActive: 1
-  _destination: 5
+  _destination:
+    _sceneAsset: {fileID: 102900000, guid: fafbb3a3ea28e954484c68cb447c97f1, type: 3}
+    _sceneName: Center

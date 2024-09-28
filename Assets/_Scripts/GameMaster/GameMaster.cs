@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,10 +7,14 @@ public class GameMaster : MonoBehaviour
 {
     public static GameMaster Instance;
 
+    public bool IsPaused { get; private set; } = false;
+
+    public SceneTransitionManager SceneTransitionManager { get; private set; }
+    public PlayerManager PlayerManager { get; private set; }
+
     [SerializeField]
     private InputTracker _inputTracker;
 
-    public bool IsPaused { get; private set; } = false;
 
     private void Awake()
     {
@@ -20,6 +26,19 @@ public class GameMaster : MonoBehaviour
         else
         {
             Destroy(gameObject); // Destroy duplicate GameManager objects
+        }
+
+        SceneTransitionManager = GetComponentInChildren<SceneTransitionManager>();
+        PlayerManager = GetComponentInChildren<PlayerManager>();
+
+        if (SceneTransitionManager == null)
+        {
+            throw new Exception("No SceneTransitionManager.");
+        }
+
+        if (PlayerManager == null)
+        {
+            throw new Exception("No PlayerManager.");
         }
     }
 
@@ -33,7 +52,7 @@ public class GameMaster : MonoBehaviour
 
     private void Start()
     {
-        _inputTracker.SetGameplay();
+        Init();
     }
 
     private void OnDisable()
@@ -44,9 +63,29 @@ public class GameMaster : MonoBehaviour
         EventManager.OnResumeGame -= HandleResumeGame;
     }
 
+    public void Init()
+    {
+        Time.timeScale = 1;
+
+        _inputTracker.SetGameplay();
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
+        SceneTransitionManager.Init();
+        PlayerManager.Init();
+
+        UIManager uIManager = FindFirstObjectByType<UIManager>();
+
+        if (uIManager != null)
+        {
+            uIManager.Init();
+        }
+    }
+
     private void HandleSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-        Debug.Log("SCENE LOADED");
+        Init();
     }
 
     private void HandlePauseGame()
@@ -73,8 +112,8 @@ public class GameMaster : MonoBehaviour
 
         _inputTracker.SetUI();
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     private void Resume()
@@ -83,7 +122,7 @@ public class GameMaster : MonoBehaviour
 
         _inputTracker.SetGameplay();
 
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }

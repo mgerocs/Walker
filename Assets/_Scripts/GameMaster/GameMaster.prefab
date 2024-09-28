@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3000288448768616933}
   - component: {fileID: 2003973554189131382}
-  - component: {fileID: 2140061833802767845}
   - component: {fileID: 1123359419811124427}
   - component: {fileID: 1199333304108211484}
   - component: {fileID: 5729810245827896553}
@@ -49,25 +48,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputTracker: {fileID: 11400000, guid: 589c05649a9c5034dae32b26bf4e2cf6, type: 2}
---- !u!114 &2140061833802767845
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7372401008612331309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e696ff1f5b99924abe6f58d5466c2b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _menuTracker: {fileID: 11400000, guid: a5a5379c3c674b648b0abfd5172880e7, type: 2}
-  _pauseMenu: {fileID: 0}
-  _settingsMenu: {fileID: 0}
-  _loadingScreen: {fileID: 0}
-  _transitionScreen: {fileID: 0}
-  _initalMenu: {fileID: 0}
-  _firstFocusItem: {fileID: 0}
 --- !u!114 &1123359419811124427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,8 +75,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41552fd58d9cd7d47a33315350f6d225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _world: {fileID: 11400000, guid: 25dc36341e790d448b918be4f7cfba29, type: 2}
   _sceneTracker: {fileID: 11400000, guid: 5e5ef815fa2d99346811feab1b030674, type: 2}
-  _initialScene: 0
+  _initialScene:
+    _sceneAsset: {fileID: 102900000, guid: fafbb3a3ea28e954484c68cb447c97f1, type: 3}
+    _sceneName: Center
 --- !u!114 &5729810245827896553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,7 +87,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7372401008612331309}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4bac8d0574739346a2a282b80939310, type: 3}
   m_Name: 

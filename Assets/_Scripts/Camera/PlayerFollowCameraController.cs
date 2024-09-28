@@ -11,6 +11,9 @@ public class PlayerFollowCameraController : MonoBehaviour
     [SerializeField]
     private float _zoomSpeed = 50f;
 
+    [SerializeField]
+    private SceneTracker _sceneTracker;
+
     private CinemachineVirtualCamera _cinemachineVirtualCamera;
     private Cinemachine3rdPersonFollow _cinemachine3rdPersonFollow;
 
@@ -18,27 +21,27 @@ public class PlayerFollowCameraController : MonoBehaviour
 
     private float _zoomDirection;
 
-    private int _currentZoomIndex = 2;
+    private int _currentZoomIndex;
     private float _currentZoomDistance;
     private float _targetZoomDistance;
     private float _zoomVelocity = 0f;
 
-    private void OnEnable()
+    private const int INDOORS_ZOOM_INDEX = 0;
+    private const int OUTDOORS_ZOOM_INDEX = 4;
+
+    private void Awake()
     {
         _cinemachineVirtualCamera = gameObject.GetComponent<CinemachineVirtualCamera>();
 
         if (_cinemachineVirtualCamera != null)
         {
             _cinemachine3rdPersonFollow = _cinemachineVirtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
-
-            if (_cinemachine3rdPersonFollow != null)
-            {
-                _currentZoomDistance = _zoomLevels[_currentZoomIndex];
-                _targetZoomDistance = _currentZoomDistance;
-            }
         }
+    }
 
-        EventManager.OnPlayerSpawn += HandlePlayerSpawn;
+    private void OnEnable()
+    {
+        EventManager.OnSpawnPlayer += HandlePlayerSpawn;
 
         EventManager.OnZoom += HandleZoom;
     }
@@ -52,7 +55,7 @@ public class PlayerFollowCameraController : MonoBehaviour
 
     private void OnDisable()
     {
-        EventManager.OnPlayerSpawn -= HandlePlayerSpawn;
+        EventManager.OnSpawnPlayer -= HandlePlayerSpawn;
 
         EventManager.OnZoom -= HandleZoom;
     }
@@ -86,6 +89,22 @@ public class PlayerFollowCameraController : MonoBehaviour
         Vector3 newRotation = player.transform.eulerAngles;
 
         _cinemachineVirtualCamera.transform.rotation = Quaternion.Euler(currentRotation.x, newRotation.y, currentRotation.z);
+
+        if (_cinemachine3rdPersonFollow != null)
+        {
+            SceneNode currentSceneNode = _sceneTracker.CurrentScene;
+
+            if (currentSceneNode != null)
+            {
+                _currentZoomIndex = currentSceneNode.SceneType == SceneType.INDOORS ? INDOORS_ZOOM_INDEX : OUTDOORS_ZOOM_INDEX;
+
+                _currentZoomDistance = _zoomLevels[_currentZoomIndex];
+                _targetZoomDistance = _currentZoomDistance;
+
+                _cinemachine3rdPersonFollow.CameraDistance = _currentZoomDistance;
+            }
+
+        }
     }
 
     private void HandleZoom(float newZoomDirection)

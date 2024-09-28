@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 public class SceneTransitionManager : MonoBehaviour
 {
     [SerializeField]
+    private World _world;
+
+    [SerializeField]
     private SceneTracker _sceneTracker;
 
     [SerializeField]
@@ -12,38 +15,41 @@ public class SceneTransitionManager : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.OnSceneChange += HandleSceneChange;
-    }
-
-    private void Start()
-    {
-        Init();
+        EventManager.OnChangeScene += HandleChangeScene;
     }
 
     private void OnDisable()
     {
-        EventManager.OnSceneChange -= HandleSceneChange;
+        EventManager.OnChangeScene -= HandleChangeScene;
     }
 
-    private void HandleSceneChange(SceneField nextScene, string gateName)
+    public void Init()
     {
-        _sceneTracker.ChangeScene(nextScene.SceneName, gateName);
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneNode currentSceneNode = _world.GetSceneNodeBySceneName(currentScene.name);
 
-        string sceneToLoad = _sceneTracker.NextScene ?? _initialScene.SceneName;
+        if (currentSceneNode != null)
+        {
+            _sceneTracker.SetScene(currentSceneNode, null, null);
+        }
+    }
+
+    private void HandleChangeScene(SceneField nextScene, string gateName)
+
+    {
+        SceneNode sceneNode = _world.GetSceneNodeBySceneName(nextScene.SceneName);
+
+        _sceneTracker.ChangeScene(sceneNode, gateName);
+
+        string sceneToLoad = _sceneTracker.NextScene.SceneField.SceneName ?? _initialScene.SceneName;
 
         // SceneManager.LoadScene(sceneToLoad.ToString());
+
+        EventManager.OnLoadingStart?.Invoke();
 
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Single);
 
         StartCoroutine(_sceneTracker.LoadSceneAsync(operation));
-    }
-
-    private void Init()
-    {
-        Scene currentScene = SceneManager.GetActiveScene();
-        string currentSceneName = currentScene.name;
-
-        _sceneTracker.SetScene(currentSceneName, null, null);
     }
 
     private SceneName ConvertStringToEnum(string nameToParse)

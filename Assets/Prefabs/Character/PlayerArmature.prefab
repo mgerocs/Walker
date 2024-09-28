@@ -749,11 +749,11 @@ GameObject:
   - component: {fileID: 3473934521036543220}
   - component: {fileID: 7258615433584179513}
   - component: {fileID: 8102358878165436598}
-  - component: {fileID: 976040839912463681}
   - component: {fileID: 552126418752317814}
-  - component: {fileID: 2716308583383334433}
   - component: {fileID: 2299731192682598215}
-  - component: {fileID: 7321895387962473195}
+  - component: {fileID: 1218024689605490263}
+  - component: {fileID: 8678651895780796129}
+  - component: {fileID: 8289589596806735117}
   m_Layer: 3
   m_Name: PlayerArmature
   m_TagString: Player
@@ -828,57 +828,6 @@ CharacterController:
   m_SkinWidth: 0.02
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0.93, z: 0}
---- !u!114 &976040839912463681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2524690459485783703}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26e54e5a728a9234ab24fcf1460ed8a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveSpeed: 2
-  SprintSpeed: 5.335
-  RotationSmoothTime: 0.12
-  SpeedChangeRate: 10
-  analogMovement: 0
-  LandingAudioClip: {fileID: 8300000, guid: ff697d3070687ce4583faa0561a145a2, type: 3}
-  FootstepAudioClips:
-  - {fileID: 8300000, guid: 72f526a6a9890f643a88e85a61c86c8a, type: 3}
-  - {fileID: 8300000, guid: 85016e0f2b01da248b9663dd49a161b0, type: 3}
-  - {fileID: 8300000, guid: 186de84b3207156479abe98f4958fed0, type: 3}
-  - {fileID: 8300000, guid: 1a91fcd19acf1e54bba0945d9f390849, type: 3}
-  - {fileID: 8300000, guid: 14e8a8d2158bec840b56c54f5266e692, type: 3}
-  - {fileID: 8300000, guid: 29841e7d5bbfb5b419c9ad16ca8bc4c1, type: 3}
-  - {fileID: 8300000, guid: dd1af302b8902684d9381de1f2d3a5af, type: 3}
-  - {fileID: 8300000, guid: 67c8b33e424ccdc4486edf538ab91c5a, type: 3}
-  - {fileID: 8300000, guid: 274649b0e221539409070ebf6c18918b, type: 3}
-  - {fileID: 8300000, guid: a3194b8bbc96ef84fab1f98f4b7dae3e, type: 3}
-  FootstepAudioVolume: 0.3
-  JumpHeight: 1.2
-  Gravity: -15
-  JumpTimeout: 0.3
-  FallTimeout: 0.15
-  Grounded: 1
-  GroundedOffset: -0.14
-  GroundedRadius: 0.28
-  GroundLayers:
-    serializedVersion: 2
-    m_Bits: 1
-  CinemachineCameraTarget: {fileID: 4611586090497082578}
-  TopClamp: 70
-  BottomClamp: -30
-  CameraAngleOverride: 10
-  LookSensitivity: 5
-  LockCameraPosition: 0
-  move: {x: 0, y: 0}
-  look: {x: 0, y: 0}
-  zoom: {x: 0, y: 0}
-  jump: 0
-  sprint: 0
 --- !u!114 &552126418752317814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -896,24 +845,6 @@ MonoBehaviour:
     m_Bits: 0
   canPush: 0
   strength: 1.1
---- !u!114 &2716308583383334433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2524690459485783703}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e087ecce43ebbff45a1b360637807d93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  move: {x: 0, y: 0}
-  look: {x: 0, y: 0}
-  zoom: 0
-  jump: 0
-  sprint: 0
-  rotate: {x: 0, y: 0}
 --- !u!114 &2299731192682598215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -941,7 +872,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 976040839912463681}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: InputMove
         m_Mode: 0
@@ -957,7 +888,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow,/XInputControllerWindows/leftStick]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 976040839912463681}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: InputLook
         m_Mode: 0
@@ -973,7 +904,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Look[/Mouse/delta,/XInputControllerWindows/rightStick]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 976040839912463681}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: InputJump
         m_Mode: 0
@@ -989,7 +920,7 @@ MonoBehaviour:
     m_ActionName: 'Player/Jump[/Keyboard/space,/XInputControllerWindows/buttonSouth]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 976040839912463681}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: InputSprint
         m_Mode: 0
@@ -1012,7 +943,7 @@ MonoBehaviour:
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &7321895387962473195
+--- !u!114 &1218024689605490263
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1021,17 +952,75 @@ MonoBehaviour:
   m_GameObject: {fileID: 2524690459485783703}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4bac8d0574739346a2a282b80939310, type: 3}
+  m_Script: {fileID: 11500000, guid: dfaa73b7f3545d742af8700bc3fd205c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionData: {fileID: 11400000, guid: faf4d0e115dc4e94186140a73447afe1, type: 2}
-  interactioninputData: {fileID: 11400000, guid: 79561610e7f445b4a94734ee687e21a9, type: 2}
-  interactionTrigger: {fileID: 4734806518398077195}
-  interactionPromptUI: {fileID: 249829390268174995}
-  overlapShpereRadius: 0.5
-  interactableLayer:
+  move: {x: 0, y: 0}
+  look: {x: 0, y: 0}
+  zoom: 0
+  jump: 0
+  sprint: 0
+  rotate: {x: 0, y: 0}
+--- !u!114 &8678651895780796129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2524690459485783703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6caf7d3d120e9bc44a7ba35583cb7e24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveSpeed: 2
+  _sprintSpeed: 5.335
+  _rotationSmoothTime: 0.12
+  _speedChangeRate: 10
+  _analogMovement: 0
+  _landingAudioClip: {fileID: 8300000, guid: ff697d3070687ce4583faa0561a145a2, type: 3}
+  _footstepAudioClips:
+  - {fileID: 8300000, guid: 72f526a6a9890f643a88e85a61c86c8a, type: 3}
+  - {fileID: 8300000, guid: 85016e0f2b01da248b9663dd49a161b0, type: 3}
+  - {fileID: 8300000, guid: 186de84b3207156479abe98f4958fed0, type: 3}
+  - {fileID: 8300000, guid: 1a91fcd19acf1e54bba0945d9f390849, type: 3}
+  - {fileID: 8300000, guid: 14e8a8d2158bec840b56c54f5266e692, type: 3}
+  - {fileID: 8300000, guid: 29841e7d5bbfb5b419c9ad16ca8bc4c1, type: 3}
+  - {fileID: 8300000, guid: dd1af302b8902684d9381de1f2d3a5af, type: 3}
+  - {fileID: 8300000, guid: 67c8b33e424ccdc4486edf538ab91c5a, type: 3}
+  - {fileID: 8300000, guid: 274649b0e221539409070ebf6c18918b, type: 3}
+  - {fileID: 8300000, guid: a3194b8bbc96ef84fab1f98f4b7dae3e, type: 3}
+  _footstepAudioVolume: 0.5
+  _jumpHeight: 1.2
+  _gravity: -15
+  _jumpTimeout: 0.5
+  _fallTimeout: 0.15
+  _grounded: 1
+  _groundedOffset: -0.14
+  _groundedRadius: 0.28
+  _groundLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 1
+  _cinemachineCameraTarget: {fileID: 4611586090497082578}
+  _topClamp: 70
+  _bottomClamp: -30
+  _cameraAngleOverride: 10
+  _lookSensitivity: 5
+  _lockCameraPosition: 0
+--- !u!114 &8289589596806735117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2524690459485783703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ccf680593b41af45b61706ccb5a5ca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraRoot: {fileID: 1590869576802308440, guid: 305506e791c13814998128ce61f9db47, type: 3}
+  _interactionTriger: {fileID: 4734806518398077195}
 --- !u!1 &2938938735320574993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2917,17 +2906,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb80418dd63c6bc428ed68b1d880fc4b, type: 3}
---- !u!114 &249829390268174995 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6407623591208947385, guid: fb80418dd63c6bc428ed68b1d880fc4b, type: 3}
-  m_PrefabInstance: {fileID: 6601117295333809194}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1892c6f44be856b43bd58ca8da41da23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &5645142101954822149 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1570757783078411311, guid: fb80418dd63c6bc428ed68b1d880fc4b, type: 3}

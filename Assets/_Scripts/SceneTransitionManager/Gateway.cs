@@ -41,7 +41,7 @@ public class Gateway : MonoBehaviour
 
         if (!other.CompareTag(playerTag)) return;
 
-        EventManager.OnSceneChange?.Invoke(_destination, _name);
+        EventManager.OnChangeScene?.Invoke(_destination, _name);
     }
 
     private void OnTriggerExit(Collider other)
@@ -94,8 +94,6 @@ public class Gateway : MonoBehaviour
                 Gizmos.DrawLine(vertex3, vertex1);
             }
         }
-
-
     }
 
     public void Activate()

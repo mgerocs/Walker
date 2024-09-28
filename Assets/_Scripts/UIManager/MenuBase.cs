@@ -21,4 +21,9 @@ public class MenuBase : MonoBehaviour, IMenu
     {
 
     }
+
+    public void LoadMenu(MenuBase menu)
+    {
+        EventManager.OnChangeMenu?.Invoke(menu);
+    }
 }

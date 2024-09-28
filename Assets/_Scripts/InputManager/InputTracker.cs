@@ -87,11 +87,11 @@ public class InputTracker : ScriptableObject, GameInput.IGameplayActions, GameIn
         }
     }
 
-    public void OnOpenMenu(InputAction.CallbackContext context)
+    public void OnOpenPauseMenu(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            EventManager.OnOpenMenu?.Invoke();
+            EventManager.OnOpenPauseMenu?.Invoke();
         }
     }
 
@@ -113,6 +113,15 @@ public class InputTracker : ScriptableObject, GameInput.IGameplayActions, GameIn
         if (context.phase == InputActionPhase.Performed)
         {
             EventManager.OnZoom?.Invoke(context.ReadValue<float>());
+        }
+    }
+
+
+    public void OnMap(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            EventManager.OnMap?.Invoke();
         }
     }
     #endregion

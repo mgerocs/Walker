@@ -370,7 +370,7 @@ namespace StarterAssetsBackup
                 GroundedRadius);
         }
 
-        private void OnFootstep(AnimationEvent animationEvent)
+       /*  private void OnFootstep(AnimationEvent animationEvent)
         {
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
@@ -388,6 +388,6 @@ namespace StarterAssetsBackup
             {
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
             }
-        }
+        } */
     }
 }

@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -10,10 +9,13 @@ public class UIManager : MonoBehaviour
     private MenuTracker _menuTracker;
 
     [SerializeField]
-    private MenuBase _pauseMenu;
+    private PauseMenu _pauseMenu;
 
     [SerializeField]
     private SettingsMenu _settingsMenu;
+
+    [SerializeField]
+    private LocalMap _localMap;
 
     [SerializeField]
     private ScreenBase _loadingScreen;
@@ -27,16 +29,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject _firstFocusItem;
 
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += HandleSceneLoaded;
-
-        EventManager.OnOpenMenu += HandleOpenMenu;
-        EventManager.OnCloseMenu += HandleCloseMenu;
-
-        EventManager.OnLoadingStart += HandleLoadingStart;
-        EventManager.OnLoadingFinish += HandleLoadingFinish;
-    }
+    private MenuBase[] _menus;
 
     private void Awake()
     {
@@ -49,39 +42,41 @@ public class UIManager : MonoBehaviour
         {
             Destroy(gameObject); // Destroy duplicate GameManager objects
         }
+
+        _menus = FindObjectsByType<MenuBase>(FindObjectsSortMode.None);
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        ResetUI();
+        EventManager.OnOpenPauseMenu += HandleOpenPauseMenu;
+        EventManager.OnCloseMenu += HandleCloseMenu;
+
+        EventManager.OnChangeMenu += HandleChangeMenu;
+
+        EventManager.OnMap += HandleMap;
+
+        EventManager.OnLoadingStart += HandleLoadingStart;
+        EventManager.OnLoadingFinish += HandleLoadingFinish;
     }
 
     private void OnDisable()
     {
-        SceneManager.sceneLoaded -= HandleSceneLoaded;
-
-        EventManager.OnOpenMenu -= HandleOpenMenu;
+        EventManager.OnOpenPauseMenu -= HandleOpenPauseMenu;
         EventManager.OnCloseMenu -= HandleCloseMenu;
+
+        EventManager.OnChangeMenu -= HandleChangeMenu;
+
+        EventManager.OnMap -= HandleMap;
 
         EventManager.OnLoadingStart -= HandleLoadingStart;
         EventManager.OnLoadingFinish -= HandleLoadingFinish;
     }
 
-    private void HandleSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    public void Init()
     {
-        ResetUI();
-    }
+        _menuTracker.PopAllMenus();
 
-    private void ResetUI()
-    {
-        MenuBase[] menusInScene = FindObjectsByType<MenuBase>(FindObjectsSortMode.None);
-
-        foreach (MenuBase menu in menusInScene)
-        {
-            menu.gameObject.SetActive(false);
-        }
-
-        _menuTracker.Reset();
+        UpdateMenuStatus();
 
         if (_transitionScreen != null)
         {
@@ -104,9 +99,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void HandleOpenMenu()
+    private void HandleOpenPauseMenu()
     {
         _menuTracker.PushMenu(_pauseMenu);
+
+        UpdateMenuStatus();
     }
 
     private void HandleCloseMenu()
@@ -116,6 +113,22 @@ public class UIManager : MonoBehaviour
         if (!currentMenu.CanBeClosed) return;
 
         _menuTracker.PopMenu();
+
+        UpdateMenuStatus();
+    }
+
+    private void HandleChangeMenu(MenuBase menu)
+    {
+        _menuTracker.PushMenu(menu);
+
+        UpdateMenuStatus();
+    }
+
+    private void HandleMap()
+    {
+        _menuTracker.PushMenu(_localMap);
+
+        UpdateMenuStatus();
     }
 
     private void HandleLoadingStart()
@@ -126,5 +139,24 @@ public class UIManager : MonoBehaviour
     private void HandleLoadingFinish()
     {
         _loadingScreen.gameObject.SetActive(false);
+    }
+
+    private void UpdateMenuStatus()
+    {
+        foreach (MenuBase menu in _menus)
+        {
+            bool isActive = _menuTracker.IsMenuOnTopOfStack(menu);
+
+            menu.gameObject.SetActive(isActive);
+        }
+
+        if (_menuTracker.StackCount() > 0)
+        {
+            EventManager.OnPauseGame?.Invoke();
+        }
+        else
+        {
+            EventManager.OnResumeGame?.Invoke();
+        }
     }
 }

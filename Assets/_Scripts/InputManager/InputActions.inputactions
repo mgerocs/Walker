@@ -60,7 +60,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "OpenMenu",
+                    "name": "OpenPauseMenu",
                     "type": "Button",
                     "id": "b315778c-9470-4472-864c-95ba42bec3a0",
                     "expectedControlType": "",
@@ -72,6 +72,15 @@
                     "name": "HighlightInteractables",
                     "type": "Button",
                     "id": "36a5e73a-dcfd-4740-9187-41949493f5e9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Map",
+                    "type": "Button",
+                    "id": "9f1fe784-f694-4e24-b750-cd7f1b22b6b3",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -174,7 +183,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";KeyboardMouse",
-                    "action": "OpenMenu",
+                    "action": "OpenPauseMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -185,7 +194,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "OpenMenu",
+                    "action": "OpenPauseMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -296,6 +305,28 @@
                     "processors": "StickDeadzone",
                     "groups": ";Gamepad",
                     "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "25162ac9-8822-46f2-9e52-2bb99872bd6e",
+                    "path": "<Keyboard>/m",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "Map",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4b2b552a-4847-4ace-8f64-66fc1d209a51",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Map",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

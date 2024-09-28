@@ -1,10 +1,7 @@
 using UnityEngine;
 
-public class Map : MonoBehaviour
+public class LocalMap : MenuBase
 {
-    [SerializeField]
-    private BoundMarkers _bounds;
-
     [SerializeField]
     private RectTransform _imageTransform;
 
@@ -13,31 +10,37 @@ public class Map : MonoBehaviour
 
     private Transform _playerTransform;
 
-    private RectTransform MapTransform => transform as RectTransform;
+    private BoundMarkers _boundMarkers;
 
     private void OnEnable()
     {
-        EventManager.OnPlayerSpawn += HandlePlayerSpawn;
-    }
-
-    private void OnDisable()
-    {
-        EventManager.OnPlayerSpawn -= HandlePlayerSpawn;
+        Init();
     }
 
     private void Update()
     {
-        Vector2 normalizedPosition = _bounds.FindNormalizedPosition(_playerTransform.position);
+        if (_boundMarkers == null) return;
+
+        if (_playerTransform == null) return;
+
+        Vector2 normalizedPosition = _boundMarkers.FindNormalizedPosition(_playerTransform.position);
 
         SetMarkerPosition(normalizedPosition);
     }
 
-    private void HandlePlayerSpawn(GameObject player)
+    private void Init()
     {
-        _playerTransform = player.transform;
+        _boundMarkers = FindFirstObjectByType<BoundMarkers>();
+
+        Player player = FindFirstObjectByType<Player>();
+
+        if (player != null)
+        {
+            _playerTransform = player.gameObject.transform;
+        }
     }
 
-    void SetMarkerPosition(Vector2 normalizedPosition)
+    private void SetMarkerPosition(Vector2 normalizedPosition)
     {
         // Calculate the marker's anchored position
         Vector2 markerPosition = new(
@@ -50,5 +53,10 @@ public class Map : MonoBehaviour
 
         // Set the marker's position relative to the map
         _markerTransform.anchoredPosition = markerPosition;
+    }
+
+    public void ShowWorldMap(WorldMap worldMap)
+    {
+        LoadMenu(worldMap);
     }
 }

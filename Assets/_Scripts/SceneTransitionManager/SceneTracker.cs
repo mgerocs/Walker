@@ -1,16 +1,15 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(fileName = "SceneTracker", menuName = "Scriptable Objects/SceneTracker")]
 public class SceneTracker : ScriptableObject
 {
 
-    public string CurrentScene { get; private set; }
-    public string NextScene { get; private set; }
+    public SceneNode CurrentScene { get; private set; }
+    public SceneNode NextScene { get; private set; }
     public string GatewayName { get; private set; }
 
-    public void ChangeScene(string destination, string gatewayName)
+    public void ChangeScene(SceneNode destination, string gatewayName)
     {
         CurrentScene = NextScene;
         NextScene = destination;
@@ -19,7 +18,7 @@ public class SceneTracker : ScriptableObject
         // Debug.Log($"Current: {CurrentScene} | Next: {NextScene} | Gateway: {GatewayName}");
     }
 
-    public void SetScene(string origin, string destination, string gatewayName)
+    public void SetScene(SceneNode origin, SceneNode destination, string gatewayName)
     {
         CurrentScene = origin;
         NextScene = destination;
