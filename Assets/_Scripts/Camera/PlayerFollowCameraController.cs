@@ -43,7 +43,7 @@ public class PlayerFollowCameraController : MonoBehaviour
     {
         EventManager.OnPlayerSpawned += HandlePlayerSpawned;
 
-        EventManager.OnZoom += HandleZoom;
+        EventManager.Zoom += HandleZoom;
     }
 
     private void Update()
@@ -57,7 +57,7 @@ public class PlayerFollowCameraController : MonoBehaviour
     {
         EventManager.OnPlayerSpawned -= HandlePlayerSpawned;
 
-        EventManager.OnZoom -= HandleZoom;
+        EventManager.Zoom -= HandleZoom;
     }
 
     private void HandlePlayerSpawned(GameObject player)

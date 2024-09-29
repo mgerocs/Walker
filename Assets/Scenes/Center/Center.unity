@@ -405,6 +405,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &401825573 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6553834460799206129, guid: ab81b45898bd61c45ab1d01ec383578c, type: 3}
+  m_PrefabInstance: {fileID: 5765028166839071079}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 282d27b44d4f86342994ee828bcb0716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &451372703
 GameObject:
   m_ObjectHideFlags: 0
@@ -1583,6 +1594,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 507107709513285396, guid: ab81b45898bd61c45ab1d01ec383578c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 615682809455596595, guid: ab81b45898bd61c45ab1d01ec383578c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -1596,12 +1611,36 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 615682809455596595, guid: ab81b45898bd61c45ab1d01ec383578c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 615682809455596595, guid: ab81b45898bd61c45ab1d01ec383578c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 615682809455596595, guid: ab81b45898bd61c45ab1d01ec383578c, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 960
       objectReference: {fileID: 0}
     - target: {fileID: 615682809455596595, guid: ab81b45898bd61c45ab1d01ec383578c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -125
+      objectReference: {fileID: 0}
+    - target: {fileID: 2340331503187566993, guid: ab81b45898bd61c45ab1d01ec383578c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2698556098686316848, guid: ab81b45898bd61c45ab1d01ec383578c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4998176398779817932, guid: ab81b45898bd61c45ab1d01ec383578c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5002857342738560615, guid: ab81b45898bd61c45ab1d01ec383578c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6112296432486732750, guid: ab81b45898bd61c45ab1d01ec383578c, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1613,6 +1652,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6112296432486732750, guid: ab81b45898bd61c45ab1d01ec383578c, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112296432486732750, guid: ab81b45898bd61c45ab1d01ec383578c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112296432486732750, guid: ab81b45898bd61c45ab1d01ec383578c, type: 3}
+      propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6112296432486732750, guid: ab81b45898bd61c45ab1d01ec383578c, type: 3}
@@ -1626,6 +1673,14 @@ PrefabInstance:
     - target: {fileID: 6539020173429956867, guid: ab81b45898bd61c45ab1d01ec383578c, type: 3}
       propertyPath: m_Name
       value: UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 7254165787657855798, guid: ab81b45898bd61c45ab1d01ec383578c, type: 3}
+      propertyPath: _inventory
+      value: 
+      objectReference: {fileID: 401825573}
+    - target: {fileID: 8567661841751882200, guid: ab81b45898bd61c45ab1d01ec383578c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

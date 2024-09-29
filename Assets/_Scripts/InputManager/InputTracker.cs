@@ -45,24 +45,24 @@ public class InputTracker : ScriptableObject, GameInput.IGameplayActions, GameIn
     #region Gameplay event handlers
     public void OnMove(InputAction.CallbackContext context)
     {
-        EventManager.OnMove?.Invoke(context.ReadValue<Vector2>());
+        EventManager.Move?.Invoke(context.ReadValue<Vector2>());
     }
 
     public void OnLook(InputAction.CallbackContext context)
     {
-        EventManager.OnLook?.Invoke(context.ReadValue<Vector2>());
+        EventManager.Look?.Invoke(context.ReadValue<Vector2>());
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            EventManager.OnJump?.Invoke();
+            EventManager.Jump?.Invoke();
         }
 
         if (context.phase == InputActionPhase.Canceled)
         {
-            EventManager.OnCancelJump?.Invoke();
+            EventManager.CancelJump?.Invoke();
         }
     }
 
@@ -70,7 +70,7 @@ public class InputTracker : ScriptableObject, GameInput.IGameplayActions, GameIn
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            EventManager.OnToggleSprint?.Invoke();
+            EventManager.ToggleSprint?.Invoke();
         }
     }
 
@@ -78,12 +78,12 @@ public class InputTracker : ScriptableObject, GameInput.IGameplayActions, GameIn
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            EventManager.OnInteract?.Invoke();
+            EventManager.Interact?.Invoke();
         }
 
         if (context.phase == InputActionPhase.Canceled)
         {
-            EventManager.OnCancelInteract?.Invoke();
+            EventManager.CancelInteract?.Invoke();
         }
     }
 
@@ -91,7 +91,7 @@ public class InputTracker : ScriptableObject, GameInput.IGameplayActions, GameIn
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            EventManager.OnOpenPauseMenu?.Invoke();
+            EventManager.OpenPauseMenu?.Invoke();
         }
     }
 
@@ -99,12 +99,12 @@ public class InputTracker : ScriptableObject, GameInput.IGameplayActions, GameIn
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            EventManager.OnHighlightInteractables?.Invoke();
+            EventManager.HighlightInteractables?.Invoke();
         }
 
         if (context.phase == InputActionPhase.Canceled)
         {
-            EventManager.OnCancelHighlightInteractables?.Invoke();
+            EventManager.CancelHighlightInteractables?.Invoke();
         }
     }
 
@@ -112,16 +112,23 @@ public class InputTracker : ScriptableObject, GameInput.IGameplayActions, GameIn
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            EventManager.OnZoom?.Invoke(context.ReadValue<float>());
+            EventManager.Zoom?.Invoke(context.ReadValue<float>());
         }
     }
-
 
     public void OnMap(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            EventManager.OnMap?.Invoke();
+            EventManager.OpenMap?.Invoke();
+        }
+    }
+
+        public void OnInventory(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            EventManager.OpenInventory?.Invoke();
         }
     }
     #endregion
@@ -131,7 +138,7 @@ public class InputTracker : ScriptableObject, GameInput.IGameplayActions, GameIn
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            EventManager.OnCloseMenu?.Invoke();
+            EventManager.CloseMenu?.Invoke();
         }
     }
     #endregion

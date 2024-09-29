@@ -13,26 +13,26 @@ public class PlayerInputs : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.OnMove += HandleMove;
+        EventManager.Move += HandleMove;
 
-        EventManager.OnLook += HandleLook;
+        EventManager.Look += HandleLook;
 
-        EventManager.OnJump += HandleJump;
-        EventManager.OnCancelJump += HandleJumpCanceled;
+        EventManager.Jump += HandleJump;
+        EventManager.CancelJump += HandleJumpCanceled;
 
-        EventManager.OnToggleSprint += HandleToggleSprint;
+        EventManager.ToggleSprint += HandleToggleSprint;
     }
 
     private void OnDisable()
     {
-        EventManager.OnMove -= HandleMove;
+        EventManager.Move -= HandleMove;
 
-        EventManager.OnLook -= HandleLook;
+        EventManager.Look -= HandleLook;
 
-        EventManager.OnJump -= HandleJump;
-        EventManager.OnCancelJump -= HandleJumpCanceled;
+        EventManager.Jump -= HandleJump;
+        EventManager.CancelJump -= HandleJumpCanceled;
 
-        EventManager.OnToggleSprint -= HandleToggleSprint;
+        EventManager.ToggleSprint -= HandleToggleSprint;
     }
 
     private void HandleMove(Vector2 newDirection)

@@ -4,81 +4,54 @@ using UnityEngine;
 
 public class InteractionManager : MonoBehaviour
 {
-    public InteractionData interactionData;
-
-    public InteractionInputData interactioninputData;
-
-    public Transform interactionTrigger;
-
-    public InteractionPromptUI interactionPromptUI;
-
-    public float overlapShpereRadius = 0.5f;
-
-    public LayerMask interactableLayer;
-
-    private readonly Collider[] _colliders = new Collider[3];
+    [SerializeField]
+    private InteractionTracker _interactionTracker;
 
     private void OnEnable()
     {
-        EventManager.OnInteract += HandleInteract;
+        EventManager.OnInteractableFound += HandleInteractableFound;
+        EventManager.OnInteractableLost += HandleInteractableLost;
+
+        EventManager.Interact += HandleInteract;
     }
 
     private void OnDisable()
     {
-        EventManager.OnInteract -= HandleInteract;
+        EventManager.OnInteractableFound -= HandleInteractableFound;
+        EventManager.OnInteractableLost -= HandleInteractableLost;
+
+        EventManager.Interact -= HandleInteract;
     }
 
-    private void Update()
+    private void HandleInteractableFound(InteractableBase interactable)
     {
-        CheckForInteractable();
+        if (_interactionTracker.IsEmpty())
+        {
+            _interactionTracker.Interactable = interactable;
+        }
+        else
+        {
+            if (!_interactionTracker.IsSameInteractable(interactable))
+            {
+                _interactionTracker.Interactable = interactable;
+            }
+        }
+    }
+
+    private void HandleInteractableLost()
+    {
+        if (!_interactionTracker.IsEmpty())
+        {
+            _interactionTracker.ResetData();
+        }
     }
 
     private void HandleInteract()
     {
-        if (interactionData.IsEmpty()) return;
+        if (_interactionTracker.IsEmpty()) return;
 
-        if (!interactionData.Interactable.IsInteractable) return;
+        if (!_interactionTracker.Interactable.IsInteractable) return;
 
-        interactionData.Interact();
-    }
-
-    private void CheckForInteractable()
-    {
-        int numFound = Physics.OverlapSphereNonAlloc(
-            interactionTrigger.position,
-            overlapShpereRadius,
-            _colliders,
-            interactableLayer
-        );
-
-        if (numFound > 0)
-        {
-            InteractableBase _interactable = _colliders[0].GetComponent<InteractableBase>();
-
-            if (_interactable != null)
-            {
-                if (interactionData.IsEmpty())
-                {
-                    interactionData.Interactable = _interactable;
-                }
-                else
-                {
-                    if (!interactionData.IsSameInteractable(_interactable))
-                    {
-                        interactionData.Interactable = _interactable;
-                    }
-                }
-
-                interactionData.Highlight();
-            }
-        }
-        else
-        {
-            if (!interactionData.IsEmpty())
-            {
-                interactionData.Unhighlight();
-                interactionData.ResetData();
-            }
-        }
+        _interactionTracker.Interact();
     }
 }

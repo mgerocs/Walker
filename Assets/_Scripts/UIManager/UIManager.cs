@@ -16,7 +16,10 @@ public class UIManager : MonoBehaviour
     private SettingsMenu _settingsMenu;
 
     [SerializeField]
-    private LocalMap _localMap;
+    private LocalMapMenu _localMap;
+
+    [SerializeField]
+    private InventoryMenu _inventory;
 
     [SerializeField]
     private ScreenBase _loadingScreen;
@@ -56,12 +59,13 @@ public class UIManager : MonoBehaviour
     {
         SceneManager.sceneLoaded += HandleSceneLoaded;
 
-        EventManager.OnOpenPauseMenu += HandleOpenPauseMenu;
-        EventManager.OnCloseMenu += HandleCloseMenu;
+        EventManager.OpenPauseMenu += HandleOpenPauseMenu;
+        EventManager.CloseMenu += HandleCloseMenu;
 
-        EventManager.OnChangeMenu += HandleChangeMenu;
+        EventManager.ChangeMenu += HandleChangeMenu;
 
-        EventManager.OnMap += HandleMap;
+        EventManager.OpenMap += HandleOpenMap;
+        EventManager.OpenInventory += HandleOpenInventory;
 
         EventManager.OnLoadingStart += HandleLoadingStart;
         EventManager.OnLoadingFinish += HandleLoadingFinish;
@@ -71,12 +75,13 @@ public class UIManager : MonoBehaviour
     {
         SceneManager.sceneLoaded -= HandleSceneLoaded;
 
-        EventManager.OnOpenPauseMenu -= HandleOpenPauseMenu;
-        EventManager.OnCloseMenu -= HandleCloseMenu;
+        EventManager.OpenPauseMenu -= HandleOpenPauseMenu;
+        EventManager.CloseMenu -= HandleCloseMenu;
 
-        EventManager.OnChangeMenu -= HandleChangeMenu;
+        EventManager.ChangeMenu -= HandleChangeMenu;
 
-        EventManager.OnMap -= HandleMap;
+        EventManager.OpenMap -= HandleOpenMap;
+        EventManager.OpenInventory -= HandleOpenInventory;
 
         EventManager.OnLoadingStart -= HandleLoadingStart;
         EventManager.OnLoadingFinish -= HandleLoadingFinish;
@@ -139,9 +144,16 @@ public class UIManager : MonoBehaviour
         UpdateMenuStatus();
     }
 
-    private void HandleMap()
+    private void HandleOpenMap()
     {
         _menuTracker.PushMenu(_localMap);
+
+        UpdateMenuStatus();
+    }
+
+    private void HandleOpenInventory()
+    {
+        _menuTracker.PushMenu(_inventory);
 
         UpdateMenuStatus();
     }

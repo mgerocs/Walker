@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WorldMap : MenuBase
+public class WorldMapMenu : MenuBase
 {
     [SerializeField]
     private SceneTracker _sceneTracker;

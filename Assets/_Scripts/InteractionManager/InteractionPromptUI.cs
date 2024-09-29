@@ -3,37 +3,61 @@ using UnityEngine;
 
 public class InteractionPromptUI : MonoBehaviour
 {
-    public InteractionData interactionData;
-
-    public TextMeshProUGUI _textMesh;
+    [SerializeField]
+    private InteractionTracker _interactionTracker;
+    [SerializeField]
+    private TextMeshProUGUI _textMesh;
 
     private Camera _mainCam;
 
-    private bool _isDisplayed = false;
-
     private string _text;
+
+    private bool _isDisplayed;
+
+    private void Awake()
+    {
+        _mainCam = Camera.main;
+    }
+
+    private void OnEnable()
+    {
+        EventManager.OnInteractableFound += HandleInteractableFound;
+        EventManager.OnInteractableLost += HandleInteractableLost;
+    }
 
     private void Start()
     {
-        _mainCam = Camera.main;
         _textMesh.text = _text;
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        if (!interactionData.IsEmpty())
+        EventManager.OnInteractableFound -= HandleInteractableFound;
+        EventManager.OnInteractableLost -= HandleInteractableLost;
+    }
+
+    private void HandleInteractableFound(InteractableBase arg0)
+    {
+        if (!_interactionTracker.IsEmpty())
         {
-            _textMesh.text = interactionData.InteractionPrompt;
+            _isDisplayed = true;
+
+            _textMesh.text = _interactionTracker.InteractionPrompt;
         }
-        else
-        {
-            _textMesh.text = null;
-        }
+    }
+
+    private void HandleInteractableLost()
+    {
+        _isDisplayed = false;
+
+        _textMesh.text = null;
     }
 
     private void LateUpdate()
     {
-        var rotation = _mainCam.transform.rotation;
+        if (!_isDisplayed) return;
+
+        Quaternion rotation = _mainCam.transform.rotation;
         transform.LookAt(transform.position + rotation * Vector3.forward, rotation * Vector3.up);
     }
 }

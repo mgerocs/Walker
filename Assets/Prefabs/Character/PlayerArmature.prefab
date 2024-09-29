@@ -1069,6 +1069,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerData: {fileID: 11400000, guid: c013a79c923d8df45b696822709527f5, type: 2}
+  _inventory: {fileID: 11400000, guid: 469e83db21469644ab185091c4918f6c, type: 2}
   _cameraRoot: {fileID: 1590869576802308440, guid: 305506e791c13814998128ce61f9db47, type: 3}
   _interactionTriger: {fileID: 4734806518398077195}
 --- !u!1 &2938938735320574993

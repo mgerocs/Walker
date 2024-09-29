@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1892c6f44be856b43bd58ca8da41da23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionData: {fileID: 11400000, guid: faf4d0e115dc4e94186140a73447afe1, type: 2}
+  _interactionTracker: {fileID: 11400000, guid: f2e6c63f94f4126428837ab31e423a43, type: 2}
   _textMesh: {fileID: 8909817593878679967}
 --- !u!1 &3564752639988403690
 GameObject:

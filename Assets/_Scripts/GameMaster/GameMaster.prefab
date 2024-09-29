@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2003973554189131382}
   - component: {fileID: 1123359419811124427}
   - component: {fileID: 1199333304108211484}
-  - component: {fileID: 5729810245827896553}
+  - component: {fileID: 3041753256091026204}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: Untagged
@@ -60,9 +60,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e31301dfb5d6a46b22044cf47f6efe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sceneTracker: {fileID: 11400000, guid: 5e5ef815fa2d99346811feab1b030674, type: 2}
   _playerTag: Player
   _player: {fileID: 2524690459485783703, guid: 37cd5a02f3cf93e4ea69029d850902fa, type: 3}
-  _sceneTracker: {fileID: 11400000, guid: 5e5ef815fa2d99346811feab1b030674, type: 2}
 --- !u!114 &1199333304108211484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,19 +75,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41552fd58d9cd7d47a33315350f6d225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _world: {fileID: 11400000, guid: 25dc36341e790d448b918be4f7cfba29, type: 2}
   _sceneTracker: {fileID: 11400000, guid: 5e5ef815fa2d99346811feab1b030674, type: 2}
-  _initialScene:
-    _sceneAsset: {fileID: 102900000, guid: fafbb3a3ea28e954484c68cb447c97f1, type: 3}
-    _sceneName: Center
---- !u!114 &5729810245827896553
+  _initialScene: {fileID: 11400000, guid: 94c1212223b90674d92acc5fbae94f86, type: 2}
+--- !u!114 &3041753256091026204
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7372401008612331309}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4bac8d0574739346a2a282b80939310, type: 3}
   m_Name: 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LocalMap : MenuBase
+public class LocalMapMenu : MenuBase
 {
     [SerializeField]
     private RectTransform _imageTransform;
@@ -55,7 +55,7 @@ public class LocalMap : MenuBase
         _markerTransform.anchoredPosition = markerPosition;
     }
 
-    public void ShowWorldMap(WorldMap worldMap)
+    public void ShowWorldMap(WorldMapMenu worldMap)
     {
         LoadMenu(worldMap);
     }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class InteractableBase : MonoBehaviour, IInteractable
+public abstract class InteractableBase : MonoBehaviour, IInteractable
 {
     public bool multipleUse;
 
@@ -24,8 +24,11 @@ public class InteractableBase : MonoBehaviour, IInteractable
 
     private void OnEnable()
     {
-        EventManager.OnHighlightInteractables += HandleHighlightInteractables;
-        EventManager.OnCancelHighlightInteractables += HandleHighlightInteractablesCanceled;
+        EventManager.HighlightInteractables += HandleHighlightInteractables;
+        EventManager.CancelHighlightInteractables += HandleHighlightInteractablesCanceled;
+
+        EventManager.OnInteractableFound += HandleInteractableFound;
+        EventManager.OnInteractableLost += HandleInteractableLost;
     }
 
     private void Start()
@@ -39,8 +42,11 @@ public class InteractableBase : MonoBehaviour, IInteractable
 
     private void OnDisable()
     {
-        EventManager.OnHighlightInteractables -= HandleHighlightInteractables;
-        EventManager.OnCancelHighlightInteractables -= HandleHighlightInteractablesCanceled;
+        EventManager.HighlightInteractables -= HandleHighlightInteractables;
+        EventManager.CancelHighlightInteractables -= HandleHighlightInteractablesCanceled;
+
+        EventManager.OnInteractableFound -= HandleInteractableFound;
+        EventManager.OnInteractableLost -= HandleInteractableLost;
     }
 
     private void HandleHighlightInteractables()
@@ -55,6 +61,19 @@ public class InteractableBase : MonoBehaviour, IInteractable
         Unhighlight();
     }
 
+    private void HandleInteractableFound(InteractableBase interactable)
+    {
+        if (interactable == this)
+        {
+            Highlight();
+        }
+    }
+
+    private void HandleInteractableLost()
+    {
+        Unhighlight();
+    }
+
     public void Highlight()
     {
         _outline.enabled = true;
@@ -62,7 +81,10 @@ public class InteractableBase : MonoBehaviour, IInteractable
 
     public void Unhighlight()
     {
-        if (!_isBulkHighlighted) _outline.enabled = false;
+        if (!_isBulkHighlighted)
+        {
+            _outline.enabled = false;
+        }
     }
 
     public virtual void OnInteract()

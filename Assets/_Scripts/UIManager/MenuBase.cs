@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MenuBase : MonoBehaviour, IMenu
+public abstract class MenuBase : MonoBehaviour, IMenu
 {
     [SerializeField]
     private bool _exitOnNewPagePush = true;
@@ -26,6 +26,6 @@ public class MenuBase : MonoBehaviour, IMenu
 
     public void LoadMenu(MenuBase menu)
     {
-        EventManager.OnChangeMenu?.Invoke(menu);
+        EventManager.ChangeMenu?.Invoke(menu);
     }
 }

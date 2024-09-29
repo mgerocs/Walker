@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4766358322160726780}
   - component: {fileID: 7168228955287699136}
   - component: {fileID: 7847007815769108685}
-  - component: {fileID: 3908889430435820419}
+  - component: {fileID: 1563115989042328702}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: Untagged
@@ -60,9 +60,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e31301dfb5d6a46b22044cf47f6efe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sceneTracker: {fileID: 11400000, guid: 5e5ef815fa2d99346811feab1b030674, type: 2}
   _playerTag: Player
   _player: {fileID: 2524690459485783703, guid: 37cd5a02f3cf93e4ea69029d850902fa, type: 3}
-  _sceneTracker: {fileID: 11400000, guid: 5e5ef815fa2d99346811feab1b030674, type: 2}
 --- !u!114 &7847007815769108685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,26 +76,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sceneTracker: {fileID: 11400000, guid: 5e5ef815fa2d99346811feab1b030674, type: 2}
-  _initialScene:
-    _sceneAsset: {fileID: 102900000, guid: fafbb3a3ea28e954484c68cb447c97f1, type: 3}
-    _sceneName: Center
---- !u!114 &3908889430435820419
+  _initialScene: {fileID: 11400000, guid: 94c1212223b90674d92acc5fbae94f86, type: 2}
+--- !u!114 &1563115989042328702
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6419113668435915013}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4bac8d0574739346a2a282b80939310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionData: {fileID: 11400000, guid: faf4d0e115dc4e94186140a73447afe1, type: 2}
-  interactioninputData: {fileID: 11400000, guid: 79561610e7f445b4a94734ee687e21a9, type: 2}
-  interactionTrigger: {fileID: 6648450930606562619, guid: 428c60224c431a544889fa36398a5ce4, type: 3}
-  interactionPromptUI: {fileID: 6407623591208947385, guid: fb80418dd63c6bc428ed68b1d880fc4b, type: 3}
-  overlapShpereRadius: 0.5
-  interactableLayer:
-    serializedVersion: 2
-    m_Bits: 64
+  _interactionTracker: {fileID: 11400000, guid: f2e6c63f94f4126428837ab31e423a43, type: 2}
