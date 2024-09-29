@@ -5,8 +5,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField]
     private PlayerData _playerData;
-    [SerializeField]
-    private InventoryObject _inventory;
+
     [SerializeField]
     private Transform _cameraRoot;
 

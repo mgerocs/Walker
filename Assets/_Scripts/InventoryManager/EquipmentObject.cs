@@ -8,7 +8,7 @@ public class EquipmentObject : ItemObject
 
     private void Awake()
     {
-        Type = ItemType.Food;
+        Type = ItemType.Equipment;
     }
 
 }

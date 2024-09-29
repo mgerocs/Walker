@@ -2,21 +2,22 @@ using UnityEngine;
 
 public abstract class InteractableBase : MonoBehaviour, IInteractable
 {
-    public bool multipleUse;
+    [SerializeField]
+    private bool _multipleUse;
+    [SerializeField]
+    private bool _isInteractable;
+    [SerializeField]
+    private string _interactionPrompt;
+    [SerializeField]
+    private Color _outlineColor = Color.white;
+    [SerializeField]
+    private float _outlineWidth = 5.0f;
 
-    public bool isInteractable;
+    public virtual bool MultipleUse { get { return _multipleUse; } }
 
-    public string interactionPrompt;
+    public bool IsInteractable { get { return _isInteractable; } }
 
-    public Color _outlineColor = Color.white;
-
-    public float _outlineWidth = 5.0f;
-
-    public bool MultipleUse => multipleUse;
-
-    public bool IsInteractable => isInteractable;
-
-    public string InteractionPrompt => interactionPrompt;
+    public virtual string InteractionPrompt { get { return _interactionPrompt; } set { _interactionPrompt = value; } }
 
     private Outline _outline;
 
@@ -61,9 +62,9 @@ public abstract class InteractableBase : MonoBehaviour, IInteractable
         Unhighlight();
     }
 
-    private void HandleInteractableFound(InteractableBase interactable)
+    private void HandleInteractableFound(IInteractable interactable)
     {
-        if (interactable == this)
+        if (interactable as Object == this)
         {
             Highlight();
         }

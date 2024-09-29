@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Interaction Tracker", menuName = "Interaction Manager/Interaction Tracker")]
 public class InteractionTracker : ScriptableObject
 {
-    public InteractableBase Interactable { get; set; }
+    public IInteractable Interactable { get; set; }
 
     public string InteractionPrompt => Interactable.InteractionPrompt;
 
@@ -13,7 +13,7 @@ public class InteractionTracker : ScriptableObject
         ResetData();
     }
 
-    public bool IsSameInteractable(InteractableBase newInteractable) =>
+    public bool IsSameInteractable(IInteractable newInteractable) =>
         Interactable == newInteractable;
 
     public bool IsEmpty() => Interactable == null;

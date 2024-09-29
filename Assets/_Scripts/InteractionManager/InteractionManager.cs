@@ -23,7 +23,7 @@ public class InteractionManager : MonoBehaviour
         EventManager.Interact -= HandleInteract;
     }
 
-    private void HandleInteractableFound(InteractableBase interactable)
+    private void HandleInteractableFound(IInteractable interactable)
     {
         if (_interactionTracker.IsEmpty())
         {

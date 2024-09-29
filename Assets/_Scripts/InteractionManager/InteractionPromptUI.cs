@@ -36,7 +36,7 @@ public class InteractionPromptUI : MonoBehaviour
         EventManager.OnInteractableLost -= HandleInteractableLost;
     }
 
-    private void HandleInteractableFound(InteractableBase arg0)
+    private void HandleInteractableFound(IInteractable arg0)
     {
         if (!_interactionTracker.IsEmpty())
         {

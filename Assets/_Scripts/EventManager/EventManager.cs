@@ -35,8 +35,10 @@ public static class EventManager
 
     // PLAYER
     public static UnityAction<GameObject> OnPlayerSpawned;
-    public static UnityAction<InteractableBase> OnInteractableFound;
+    public static UnityAction<IInteractable> OnInteractableFound;
     public static UnityAction OnInteractableLost;
+
+    public static UnityAction<ItemObject> OnItemPickedUp;
 
     // SCENE
     public static UnityAction OnSceneLoaded;

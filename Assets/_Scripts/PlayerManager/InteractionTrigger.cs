@@ -33,7 +33,7 @@ public class InteractionTrigger : MonoBehaviour
         {
             _hasFound = true;
 
-            InteractableBase interactable = _colliders[0].GetComponent<InteractableBase>();
+            IInteractable interactable = _colliders[0].GetComponent<IInteractable>();
 
             if (interactable != null)
             {

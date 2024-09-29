@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory Manager/Inventory")]
-public class InventoryObject : ScriptableObject
+[CreateAssetMenu(fileName = "Inventory Tracker", menuName = "Inventory Manager/Inventory Tracker")]
+public class InventoryTracker : ScriptableObject
 {
     public List<InventorySlot> Container = new List<InventorySlot>();
 
