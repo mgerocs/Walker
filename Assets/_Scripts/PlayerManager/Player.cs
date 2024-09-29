@@ -1,26 +1,51 @@
+using Cinemachine;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField]
+    private PlayerData _playerData;
+
     [SerializeField]
     private Transform _cameraRoot;
 
     [SerializeField]
     private Transform _interactionTriger;
 
-    public Transform CameraRoot
+    public Transform CameraRoot => _cameraRoot;
+
+    public Transform InteractionTrigger => _interactionTriger;
+
+
+    private CinemachineImpulseSource _cinemachineImpulseSource;
+
+    private void Awake()
     {
-        get
+        _cinemachineImpulseSource = GetComponent<CinemachineImpulseSource>();
+
+        if (_cinemachineImpulseSource == null)
         {
-            return _cameraRoot;
+            Debug.LogError("No CinemachineImpulseSource.");
         }
     }
 
-    public Transform InteractionTrigger
+    public void Land(float fallDistance)
     {
-        get
+        Debug.Log("Player fell: " + fallDistance);
+
+        if (fallDistance < _playerData.MinFallDistance) return;
+
+        TakeDamage(_playerData.FallDamage * fallDistance);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        Debug.Log("Fall damage taken: " + damage);
+
+        if (_cinemachineImpulseSource != null)
         {
-            return _interactionTriger;
+            _cinemachineImpulseSource.GenerateImpulse();
         }
+        //  _playerData.Health -= damage;
     }
 }

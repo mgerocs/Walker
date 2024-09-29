@@ -752,6 +752,7 @@ GameObject:
   - component: {fileID: 552126418752317814}
   - component: {fileID: 2299731192682598215}
   - component: {fileID: 1218024689605490263}
+  - component: {fileID: 2790252560545551116}
   - component: {fileID: 8678651895780796129}
   - component: {fileID: 8289589596806735117}
   m_Layer: 3
@@ -955,12 +956,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfaa73b7f3545d742af8700bc3fd205c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  move: {x: 0, y: 0}
-  look: {x: 0, y: 0}
-  zoom: 0
-  jump: 0
-  sprint: 0
-  rotate: {x: 0, y: 0}
+  _playerData: {fileID: 11400000, guid: c013a79c923d8df45b696822709527f5, type: 2}
+--- !u!114 &2790252560545551116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2524690459485783703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_ImpulseShape: 2
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.2
+    m_ImpulseType: 0
+    m_DissipationRate: 0.25
+    m_RawSignal: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 100
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: 0, y: -1, z: 0}
 --- !u!114 &8678651895780796129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1019,6 +1068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ccf680593b41af45b61706ccb5a5ca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerData: {fileID: 11400000, guid: c013a79c923d8df45b696822709527f5, type: 2}
   _cameraRoot: {fileID: 1590869576802308440, guid: 305506e791c13814998128ce61f9db47, type: 3}
   _interactionTriger: {fileID: 4734806518398077195}
 --- !u!1 &2938938735320574993

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
@@ -63,6 +64,10 @@ public class PlayerController : MonoBehaviour
     [Tooltip("If the character is grounded or not. Not part of the CharacterController built in grounded check")]
     [SerializeField]
     private bool _grounded = true;
+    private bool _wasGrounded;
+    private bool _falling;
+    private bool _wasFalling;
+    private float _startOfFall;
 
     [Tooltip("Useful for rough ground")]
     [SerializeField]
@@ -124,6 +129,8 @@ public class PlayerController : MonoBehaviour
     private int _animIDFreeFall;
     private int _animIDMotionSpeed;
 
+    private Player _player;
+
 #if ENABLE_INPUT_SYSTEM
     private PlayerInput _playerInput;
 #endif
@@ -165,6 +172,14 @@ public class PlayerController : MonoBehaviour
         _hasAnimator = TryGetComponent(out _animator);
         _controller = GetComponent<CharacterController>();
         _input = GetComponent<PlayerInputs>();
+
+        _player = GetComponent<Player>();
+
+        if (_player == null)
+        {
+            throw new Exception("No Player.");
+        }
+
 #if ENABLE_INPUT_SYSTEM
         _playerInput = GetComponent<PlayerInput>();
 #else
@@ -183,8 +198,32 @@ public class PlayerController : MonoBehaviour
         _hasAnimator = TryGetComponent(out _animator);
 
         JumpAndGravity();
-        GroundedCheck();
+
         Move();
+    }
+
+    private void FixedUpdate()
+    {
+        GroundedCheck();
+
+        _falling = !_grounded && _verticalVelocity < 0;
+
+        if (_falling)
+        {
+            Debug.Log("FALLING");
+        }
+
+        if (!_wasFalling && _falling)
+        {
+            _startOfFall = transform.position.y;
+        }
+        if (!_wasGrounded && _grounded)
+        {
+            _player.Land(_startOfFall - transform.position.y);
+        }
+
+        _wasGrounded = _grounded;
+        _wasFalling = _falling;
     }
 
     private void LateUpdate()
@@ -219,12 +258,12 @@ public class PlayerController : MonoBehaviour
     private void CameraRotation()
     {
         // if there is an input and camera position is not fixed
-        if (_input.look.sqrMagnitude >= _threshold && !_lockCameraPosition)
+        if (_input.Look.sqrMagnitude >= _threshold && !_lockCameraPosition)
         {
             //Don't multiply mouse input by Time.deltaTime;
             float deltaTimeMultiplier = IsCurrentDeviceMouse ? _lookSensitivity : Time.deltaTime;
 
-            _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier;
+            _cinemachineTargetYaw += _input.Look.x * deltaTimeMultiplier;
 
             // constrict camera on y axis
             // _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier;
@@ -244,19 +283,19 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         // set target speed based on move speed, sprint speed and if sprint is pressed
-        float targetSpeed = _input.sprint ? _sprintSpeed : _moveSpeed;
+        float targetSpeed = _input.Sprint ? _sprintSpeed : _moveSpeed;
 
         // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
         // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
         // if there is no input, set the target speed to 0
-        if (_input.move == Vector2.zero) targetSpeed = 0.0f;
+        if (_input.Move == Vector2.zero) targetSpeed = 0.0f;
 
         // a reference to the players current horizontal velocity
         float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
         float speedOffset = 0.1f;
-        float inputMagnitude = _analogMovement ? _input.move.magnitude : 1f;
+        float inputMagnitude = _analogMovement ? _input.Move.magnitude : 1f;
 
         // accelerate or decelerate to target speed
         if (currentHorizontalSpeed < targetSpeed - speedOffset ||
@@ -279,11 +318,11 @@ public class PlayerController : MonoBehaviour
         if (_animationBlend < 0.01f) _animationBlend = 0f;
 
         // normalise input direction
-        Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+        Vector3 inputDirection = new Vector3(_input.Move.x, 0.0f, _input.Move.y).normalized;
 
         // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
         // if there is a move input rotate player when the player is moving
-        if (_input.move != Vector2.zero)
+        if (_input.Move != Vector2.zero)
         {
             _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
                               _mainCamera.transform.eulerAngles.y;
@@ -330,7 +369,7 @@ public class PlayerController : MonoBehaviour
             }
 
             // Jump
-            if (_input.jump && _jumpTimeoutDelta <= 0.0f)
+            if (_input.Jump && _jumpTimeoutDelta <= 0.0f)
             {
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
                 _verticalVelocity = Mathf.Sqrt(_jumpHeight * -2f * _gravity);
@@ -368,7 +407,7 @@ public class PlayerController : MonoBehaviour
             }
 
             // if we are not grounded, do not jump
-            _input.jump = false;
+            _input.Jump = false;
         }
 
         // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
@@ -405,7 +444,7 @@ public class PlayerController : MonoBehaviour
         {
             if (_footstepAudioClips.Length > 0)
             {
-                var index = Random.Range(0, _footstepAudioClips.Length);
+                var index = UnityEngine.Random.Range(0, _footstepAudioClips.Length);
                 AudioSource.PlayClipAtPoint(_footstepAudioClips[index], transform.TransformPoint(_controller.center), _footstepAudioVolume);
             }
         }

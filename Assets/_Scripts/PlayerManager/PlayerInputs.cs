@@ -3,20 +3,19 @@ using UnityEngine;
 public class PlayerInputs : MonoBehaviour
 {
     [Header("Character Input Values")]
-    public Vector2 move;
-    public Vector2 look;
-    public float zoom;
-    public bool jump;
-    public bool sprint;
-    public Vector2 rotate;
+    public Vector2 Move { get; private set; }
+    public Vector2 Look { get; private set; }
+    public bool Jump { get; set; }
+    public bool Sprint => _playerData.IsSprinting;
+
+    [SerializeField]
+    private PlayerData _playerData;
 
     private void OnEnable()
     {
         EventManager.OnMove += HandleMove;
 
         EventManager.OnLook += HandleLook;
-
-        EventManager.OnZoom += HandleZoom;
 
         EventManager.OnJump += HandleJump;
         EventManager.OnCancelJump += HandleJumpCanceled;
@@ -30,8 +29,6 @@ public class PlayerInputs : MonoBehaviour
 
         EventManager.OnLook -= HandleLook;
 
-        EventManager.OnZoom -= HandleZoom;
-
         EventManager.OnJump -= HandleJump;
         EventManager.OnCancelJump -= HandleJumpCanceled;
 
@@ -40,32 +37,27 @@ public class PlayerInputs : MonoBehaviour
 
     private void HandleMove(Vector2 newDirection)
     {
-        move = newDirection;
+        Move = newDirection;
     }
 
     public void HandleLook(Vector2 newLookDirection)
     {
-        look = newLookDirection;
-    }
-
-    private void HandleZoom(float newScrollDirection)
-    {
-        zoom = newScrollDirection;
+        Look = newLookDirection;
     }
 
     private void HandleJump()
     {
-        jump = true;
+        Jump = true;
     }
 
     private void HandleJumpCanceled()
     {
-        jump = false;
+        Jump = false;
     }
 
     private void HandleToggleSprint()
     {
-        sprint = !sprint;
+        _playerData.IsSprinting = !_playerData.IsSprinting;
     }
 }
 
