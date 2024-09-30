@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Inventory Tracker", menuName = "Inventory Manager/Inventory Tracker")]
 public class InventoryTracker : ScriptableObject
 {
-    public List<InventorySlot> Container = new List<InventorySlot>();
+    public List<InventorySlot> Container = new();
 
     public void AddItem(ItemObject item, int amount)
     {

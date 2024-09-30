@@ -1,7 +1,7 @@
 // https://www.youtube.com/watch?v=GAh225QNpm0&ab_channel=KetraGames
 
 using System;
-using Cinemachine;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class PlayerFollowCameraController : MonoBehaviour
@@ -14,8 +14,8 @@ public class PlayerFollowCameraController : MonoBehaviour
     [SerializeField]
     private float _zoomSpeed = 50f;
 
-    private CinemachineVirtualCamera _cinemachineVirtualCamera;
-    private Cinemachine3rdPersonFollow _cinemachine3rdPersonFollow;
+    private CinemachineCamera _cinemachineCamera;
+    private CinemachineThirdPersonFollow _cinemachine3rdPersonFollow;
 
     private CameraRoot _target;
 
@@ -31,11 +31,11 @@ public class PlayerFollowCameraController : MonoBehaviour
 
     private void Awake()
     {
-        _cinemachineVirtualCamera = gameObject.GetComponent<CinemachineVirtualCamera>();
+        _cinemachineCamera = gameObject.GetComponent<CinemachineCamera>();
 
-        if (_cinemachineVirtualCamera != null)
+        if (_cinemachineCamera != null)
         {
-            _cinemachine3rdPersonFollow = _cinemachineVirtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
+            _cinemachine3rdPersonFollow = _cinemachineCamera.GetComponent<CinemachineThirdPersonFollow>();
         }
     }
 
@@ -67,42 +67,44 @@ public class PlayerFollowCameraController : MonoBehaviour
             throw new Exception("There is no Player");
         }
 
-        if (_cinemachineVirtualCamera == null)
+        if (_cinemachineCamera == null)
         {
-            throw new Exception("There is no Virtual Camera.");
+            throw new Exception("There is no CinemachineCamera.");
         }
 
         CameraRoot cameraRoot = player.GetComponentInChildren<CameraRoot>();
 
         if (cameraRoot == null)
         {
-            throw new Exception("There is no Camera Root.");
+            throw new Exception("There is no CameraRoot.");
         }
 
         _target = cameraRoot;
 
-        _cinemachineVirtualCamera.Follow = _target.transform;
-        _cinemachineVirtualCamera.LookAt = _target.transform;
+        _cinemachineCamera.Follow = _target.transform;
+        _cinemachineCamera.LookAt = _target.transform;
 
-        Vector3 currentRotation = _cinemachineVirtualCamera.transform.rotation.eulerAngles;
+        Vector3 currentRotation = _cinemachineCamera.transform.rotation.eulerAngles;
 
         Vector3 newRotation = player.transform.eulerAngles;
 
-        _cinemachineVirtualCamera.transform.rotation = Quaternion.Euler(currentRotation.x, newRotation.y, currentRotation.z);
+        _cinemachineCamera.transform.rotation = Quaternion.Euler(currentRotation.x, newRotation.y, currentRotation.z);
 
-        if (_cinemachine3rdPersonFollow != null)
+        if (_cinemachine3rdPersonFollow == null)
         {
-            SceneData currentScene = _sceneTracker.CurrentScene;
+            throw new Exception("CinemachineThirdPersonFollow");
+        }
 
-            if (currentScene != null)
-            {
-                _currentZoomIndex = currentScene.SceneType == SceneType.INDOORS ? INDOORS_ZOOM_INDEX : OUTDOORS_ZOOM_INDEX;
+        SceneData currentScene = _sceneTracker.CurrentScene;
 
-                _currentZoomDistance = _zoomLevels[_currentZoomIndex];
-                _targetZoomDistance = _currentZoomDistance;
+        if (currentScene != null)
+        {
+            _currentZoomIndex = currentScene.SceneType == SceneType.INDOORS ? INDOORS_ZOOM_INDEX : OUTDOORS_ZOOM_INDEX;
 
-                _cinemachine3rdPersonFollow.CameraDistance = _currentZoomDistance;
-            }
+            _currentZoomDistance = _zoomLevels[_currentZoomIndex];
+            _targetZoomDistance = _currentZoomDistance;
+
+            _cinemachine3rdPersonFollow.CameraDistance = _currentZoomDistance;
         }
     }
 
