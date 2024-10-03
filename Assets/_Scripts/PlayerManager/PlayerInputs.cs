@@ -11,6 +11,8 @@ public class PlayerInputs : MonoBehaviour
     [SerializeField]
     private PlayerData _playerData;
 
+    private Vector2 _dummy = new Vector2(0, 0);
+
     private void OnEnable()
     {
         EventManager.Move += HandleMove;

@@ -6,27 +6,40 @@ public class Player : MonoBehaviour
     [SerializeField]
     private PlayerData _playerData;
 
-    [SerializeField]
-    private Transform _cameraRoot;
-
-    [SerializeField]
-    private Transform _interactionTriger;
-
-    public Transform CameraRoot => _cameraRoot;
-
-    public Transform InteractionTrigger => _interactionTriger;
-
-
     private CinemachineImpulseSource _cinemachineImpulseSource;
+
+    private CharacterController _characterController;
+    private PlayerController _playerController;
 
     private void Awake()
     {
+        _characterController = gameObject.GetComponent<CharacterController>();
+
+        if (_characterController == null)
+        {
+            Debug.LogError("Missing CharacterController component.");
+        }
+
+        _playerController = gameObject.GetComponent<PlayerController>();
+
+        if (_playerController == null)
+        {
+            Debug.LogError("Missing PlayerController component.");
+        }
+
         _cinemachineImpulseSource = GetComponent<CinemachineImpulseSource>();
 
         if (_cinemachineImpulseSource == null)
         {
-            Debug.LogError("No CinemachineImpulseSource.");
+            Debug.LogError("Missing CinemachineImpulseSource component.");
         }
+    }
+
+    private void Start()
+    {
+        if (_characterController == null) return;
+
+        _characterController.enabled = true;
     }
 
     public void Land(float fallDistance)

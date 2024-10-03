@@ -3,7 +3,7 @@ using UnityEngine;
 public class InteractionTrigger : MonoBehaviour
 {
     [SerializeField]
-    private float _overlapShpereRadius = 0.3f;
+    private float _overlapShpereRadius = 1f;
 
     [SerializeField]
     private LayerMask _interactableLayer;

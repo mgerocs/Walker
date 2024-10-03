@@ -165,6 +165,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        EventManager.TeleportPlayer += HandleTeleportPlayer;
+    }
+
     private void Start()
     {
         _cinemachineTargetYaw = _cinemachineCameraTarget.transform.rotation.eulerAngles.y;
@@ -231,6 +236,16 @@ public class PlayerController : MonoBehaviour
         CameraRotation();
     }
 
+    private void OnDisable()
+    {
+        EventManager.TeleportPlayer -= HandleTeleportPlayer;
+    }
+
+    private void HandleTeleportPlayer(Transform transform)
+    {
+        Teleport(transform);
+    }
+
     private void AssignAnimationIDs()
     {
         _animIDSpeed = Animator.StringToHash("Speed");
@@ -278,6 +293,19 @@ public class PlayerController : MonoBehaviour
         // Cinemachine will follow this target
         _cinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + _cameraAngleOverride,
             _cinemachineTargetYaw, 0.0f);
+    }
+
+    private void SetRotation(Quaternion lookRotation)
+    {
+        // Convert the lookRotation to Euler angles to extract the yaw
+        Vector3 lookRotationEuler = lookRotation.eulerAngles;
+
+        // Set _cinemachineTargetYaw to match the yaw of lookRotation
+        _cinemachineTargetYaw = lookRotationEuler.y;
+
+        // Apply the rotation to the camera target
+        _cinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + _cameraAngleOverride,
+                    _cinemachineTargetYaw, 0.0f);
     }
 
     private void Move()
@@ -346,6 +374,24 @@ public class PlayerController : MonoBehaviour
             _animator.SetFloat(_animIDSpeed, _animationBlend);
             _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
         }
+    }
+
+    private void Teleport(Transform transform)
+    {
+        if (_controller == null) return;
+
+        _controller.enabled = false;
+
+        gameObject.transform.position = transform.position;
+        Vector3 currentRotation = gameObject.transform.rotation.eulerAngles;
+        Vector3 newRotation = transform.eulerAngles;
+        gameObject.transform.rotation = Quaternion.Euler(currentRotation.x, newRotation.y, currentRotation.z);
+
+        Quaternion lookRotation = Quaternion.LookRotation(gameObject.transform.forward);
+
+        SetRotation(lookRotation);
+
+        _controller.enabled = true;
     }
 
     private void JumpAndGravity()

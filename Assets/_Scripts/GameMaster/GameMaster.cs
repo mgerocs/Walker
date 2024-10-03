@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class GameMaster : MonoBehaviour
@@ -8,7 +7,6 @@ public class GameMaster : MonoBehaviour
     public bool IsPaused { get; private set; } = false;
 
     public SceneTransitionManager SceneTransitionManager { get; private set; }
-    public PlayerManager PlayerManager { get; private set; }
 
     [SerializeField]
     private InputTracker _inputTracker;
@@ -25,25 +23,17 @@ public class GameMaster : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        SceneTransitionManager = GetComponentInChildren<SceneTransitionManager>();
-        PlayerManager = GetComponentInChildren<PlayerManager>();
-
-        if (SceneTransitionManager == null)
-        {
-            throw new Exception("No SceneTransitionManager.");
-        }
-
-        if (PlayerManager == null)
-        {
-            throw new Exception("No PlayerManager.");
-        }
     }
 
     private void OnEnable()
     {
         EventManager.PauseGame += HandlePauseGame;
         EventManager.ResumeGame += HandleResumeGame;
+
+        EventManager.OnMenuStackChanged += HandleMenuStackChanged;
+
+        EventManager.StartDialog += HandleStartDialog;
+        EventManager.OnDialogFinished += HandleDialogFinished;
     }
 
     private void Start()
@@ -55,10 +45,29 @@ public class GameMaster : MonoBehaviour
     {
         EventManager.PauseGame -= HandlePauseGame;
         EventManager.ResumeGame -= HandleResumeGame;
+
+        EventManager.OnMenuStackChanged -= HandleMenuStackChanged;
+
+        EventManager.StartDialog -= HandleStartDialog;
+        EventManager.OnDialogFinished -= HandleDialogFinished;
+    }
+
+    private void HandleMenuStackChanged(int menuCount)
+    {
+        if (menuCount > 0)
+        {
+            Pause();
+        }
+        else
+        {
+            Resume();
+        }
     }
 
     public void Init()
     {
+        IsPaused = false;
+
         Time.timeScale = 1;
 
         _inputTracker.SetGameplay();
@@ -69,24 +78,36 @@ public class GameMaster : MonoBehaviour
 
     private void HandlePauseGame()
     {
-        if (!IsPaused)
-        {
-            IsPaused = true;
-            Pause();
-        }
+        Pause();
     }
 
     private void HandleResumeGame()
     {
-        if (IsPaused)
-        {
-            IsPaused = false;
-            Resume();
-        }
+        Resume();
+    }
+
+    private void HandleStartDialog(NPCBase arg0)
+    {
+        _inputTracker.SetUI();
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    private void HandleDialogFinished()
+    {
+        _inputTracker.SetGameplay();
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Pause()
     {
+        if (IsPaused) return;
+
+        IsPaused = true;
+
         Time.timeScale = 0;
 
         _inputTracker.SetUI();
@@ -97,6 +118,10 @@ public class GameMaster : MonoBehaviour
 
     private void Resume()
     {
+        if (!IsPaused) return;
+
+        IsPaused = false;
+
         Time.timeScale = 1;
 
         _inputTracker.SetGameplay();

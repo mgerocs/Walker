@@ -7,12 +7,27 @@ public class InteractionManager : MonoBehaviour
     [SerializeField]
     private InteractionTracker _interactionTracker;
 
+    private void Awake()
+    {
+        if (_interactionTracker == null)
+        {
+            Debug.LogError("Missing InteractionTracker reference.");
+        }
+    }
+
     private void OnEnable()
     {
         EventManager.OnInteractableFound += HandleInteractableFound;
         EventManager.OnInteractableLost += HandleInteractableLost;
 
         EventManager.Interact += HandleInteract;
+    }
+
+    private void Start()
+    {
+        if (_interactionTracker == null) return;
+
+        _interactionTracker.ResetData();
     }
 
     private void OnDisable()
@@ -25,6 +40,8 @@ public class InteractionManager : MonoBehaviour
 
     private void HandleInteractableFound(IInteractable interactable)
     {
+        if (_interactionTracker == null) return;
+
         if (_interactionTracker.IsEmpty())
         {
             _interactionTracker.Interactable = interactable;
@@ -40,6 +57,8 @@ public class InteractionManager : MonoBehaviour
 
     private void HandleInteractableLost()
     {
+        if (_interactionTracker == null) return;
+
         if (!_interactionTracker.IsEmpty())
         {
             _interactionTracker.ResetData();
@@ -48,6 +67,8 @@ public class InteractionManager : MonoBehaviour
 
     private void HandleInteract()
     {
+        if (_interactionTracker == null) return;
+
         if (_interactionTracker.IsEmpty()) return;
 
         if (!_interactionTracker.Interactable.IsInteractable) return;

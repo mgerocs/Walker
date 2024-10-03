@@ -26,19 +26,33 @@ public static class EventManager
     public static UnityAction CloseMenu;
     #endregion
 
+    // SCENE
+    public static UnityAction<SceneData, string> OnExitScene;
+    public static UnityAction<SceneData> FastTravel;
+
     public static UnityAction PauseGame;
     public static UnityAction ResumeGame;
 
-
     // UI
     public static UnityAction<MenuBase> ChangeMenu;
+    public static UnityAction<int> OnMenuStackChanged;
 
     // PLAYER
-    public static UnityAction<GameObject> OnPlayerSpawned;
+    public static UnityAction OnPlayerSpawned;
+
     public static UnityAction<IInteractable> OnInteractableFound;
     public static UnityAction OnInteractableLost;
 
     public static UnityAction<ItemObject> OnItemPickedUp;
+
+
+    public static UnityAction<NPCBase> StartDialog;
+    public static UnityAction FinishDialog;
+    public static UnityAction OnDialogStarted;
+    public static UnityAction OnDialogFinished;
+
+    public static UnityAction<Transform> TeleportPlayer;
+
 
     // SCENE
     public static UnityAction OnSceneLoaded;

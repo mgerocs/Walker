@@ -36,6 +36,7 @@ public class MenuTracker : ScriptableObject
     public void PushMenu(MenuBase nextMenu)
     {
         nextMenu.Enter();
+        nextMenu.gameObject.SetActive(true);
 
         if (_menuStack.Count > 0)
         {
@@ -44,6 +45,7 @@ public class MenuTracker : ScriptableObject
             if (prevMenu.ExitOnNewPagePush)
             {
                 prevMenu.Exit();
+                prevMenu.gameObject.SetActive(false);
             }
         }
 
@@ -57,6 +59,7 @@ public class MenuTracker : ScriptableObject
             MenuBase prevMenu = _menuStack.Pop();
 
             prevMenu.Exit();
+            prevMenu.gameObject.SetActive(false);
 
             if (_menuStack.Count > 0)
             {
@@ -65,6 +68,7 @@ public class MenuTracker : ScriptableObject
                 if (nextMenu.ExitOnNewPagePush)
                 {
                     nextMenu.Enter();
+                    nextMenu.gameObject.SetActive(true);
                 }
             }
         }
@@ -74,14 +78,8 @@ public class MenuTracker : ScriptableObject
         }
     }
 
-    public void PopAllMenus()
+    public void Reset()
     {
-        for (int i = 0; i < _menuStack.Count; i++)
-        {
-            MenuBase menu = _menuStack.Peek();
-            menu.Exit();
-        }
-
         _menuStack = new();
     }
 }

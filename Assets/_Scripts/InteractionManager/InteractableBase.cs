@@ -75,12 +75,12 @@ public abstract class InteractableBase : MonoBehaviour, IInteractable
         Unhighlight();
     }
 
-    public void Highlight()
+    public virtual void Highlight()
     {
         _outline.enabled = true;
     }
 
-    public void Unhighlight()
+    public virtual void Unhighlight()
     {
         if (!_isBulkHighlighted)
         {

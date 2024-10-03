@@ -88,6 +88,6 @@ public class WorldMapMenu : MenuBase
 
     private void OnSceneSelected(SceneData nextScene)
     {
-        GameMaster.Instance.SceneTransitionManager.FastTravel(nextScene);
+        EventManager.FastTravel?.Invoke(nextScene);
     }
 }

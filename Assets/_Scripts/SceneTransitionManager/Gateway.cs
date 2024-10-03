@@ -46,7 +46,7 @@ public class Gateway : MonoBehaviour
 
         if (!other.CompareTag(playerTag)) return;
 
-        GameMaster.Instance.SceneTransitionManager.ExitScene(_destination, _name);
+        EventManager.OnExitScene?.Invoke(_destination, _name);
     }
 
     private void OnTriggerExit(Collider other)
@@ -110,6 +110,4 @@ public class Gateway : MonoBehaviour
     {
         _isActive = false;
     }
-
-
 }
