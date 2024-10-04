@@ -20,6 +20,8 @@ public static class EventManager
     public static UnityAction CancelHighlightInteractables;
     public static UnityAction OpenMap;
     public static UnityAction OpenInventory;
+    public static UnityAction OpenTimeMenu;
+    public static UnityAction OpenCharacterMenu;
     #endregion
 
     #region UI events
@@ -36,6 +38,10 @@ public static class EventManager
     // UI
     public static UnityAction<MenuBase> ChangeMenu;
     public static UnityAction<int> OnMenuStackChanged;
+
+    // TIME
+    public static UnityAction<int> SkipTime;
+
 
     // PLAYER
     public static UnityAction OnPlayerSpawned;

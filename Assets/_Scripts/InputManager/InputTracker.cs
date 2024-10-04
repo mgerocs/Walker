@@ -124,11 +124,27 @@ public class InputTracker : ScriptableObject, GameInput.IGameplayActions, GameIn
         }
     }
 
-        public void OnInventory(InputAction.CallbackContext context)
+    public void OnCharacter(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            EventManager.OpenCharacterMenu?.Invoke();
+        }
+    }
+
+    public void OnInventory(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
         {
             EventManager.OpenInventory?.Invoke();
+        }
+    }
+
+    public void OnTime(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            EventManager.OpenTimeMenu?.Invoke();
         }
     }
     #endregion

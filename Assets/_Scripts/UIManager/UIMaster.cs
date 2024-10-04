@@ -23,6 +23,9 @@ public class UIMaster : MonoBehaviour
     private InventoryMenu _inventory;
 
     [SerializeField]
+    private TimeMenu _timeMenu;
+
+    [SerializeField]
     private LoadingScreen _loadingScreen;
 
     [SerializeField]
@@ -80,6 +83,12 @@ public class UIMaster : MonoBehaviour
             return;
         }
 
+        if (_timeMenu == null)
+        {
+            Debug.LogError("Missing TimeMenu reference.");
+            return;
+        }
+
         if (_loadingScreen == null)
         {
             Debug.LogError("Missing LoadingScreen reference.");
@@ -115,6 +124,7 @@ public class UIMaster : MonoBehaviour
 
         EventManager.OpenMap += HandleOpenMap;
         EventManager.OpenInventory += HandleOpenInventory;
+        EventManager.OpenTimeMenu += HandleOpenTimeMenu;
 
         EventManager.OnLoadingStart += HandleLoadingStart;
         EventManager.OnLoadingFinish += HandleLoadingFinish;
@@ -137,6 +147,7 @@ public class UIMaster : MonoBehaviour
 
         EventManager.OpenMap -= HandleOpenMap;
         EventManager.OpenInventory -= HandleOpenInventory;
+        EventManager.OpenTimeMenu -= HandleOpenTimeMenu;
 
         EventManager.OnLoadingStart -= HandleLoadingStart;
         EventManager.OnLoadingFinish -= HandleLoadingFinish;
@@ -222,6 +233,13 @@ public class UIMaster : MonoBehaviour
         if (_inventory == null) return;
 
         OpenMenu(_inventory);
+    }
+
+    private void HandleOpenTimeMenu()
+    {
+        if (_timeMenu == null) return;
+
+        OpenMenu(_timeMenu);
     }
 
     private void HandleLoadingStart()

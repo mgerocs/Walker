@@ -117,6 +117,24 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Time"",
+                    ""type"": ""Button"",
+                    ""id"": ""143d187a-a3b6-4973-a47e-bf0bcb8107c6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Character"",
+                    ""type"": ""Button"",
+                    ""id"": ""f665df2b-9782-457c-8b39-5ae4ad40c087"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -376,11 +394,55 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""1c1b0daa-f49e-4468-b4e8-f0ee42033b83"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
                     ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7c47986b-c422-4504-9c09-fbd876f4e204"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";KeyboardMouse"",
+                    ""action"": ""Time"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d0ae2304-b420-4538-9be4-187509143c5a"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Time"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7004de62-09a3-4d2f-842c-c4d8f6ea5d05"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";KeyboardMouse"",
+                    ""action"": ""Character"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8f72000b-16e1-4fc7-b4a0-9fcc6675d8d7"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Character"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -468,6 +530,8 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_Gameplay_HighlightInteractables = m_Gameplay.FindAction("HighlightInteractables", throwIfNotFound: true);
         m_Gameplay_Map = m_Gameplay.FindAction("Map", throwIfNotFound: true);
         m_Gameplay_Inventory = m_Gameplay.FindAction("Inventory", throwIfNotFound: true);
+        m_Gameplay_Time = m_Gameplay.FindAction("Time", throwIfNotFound: true);
+        m_Gameplay_Character = m_Gameplay.FindAction("Character", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_CloseMenu = m_UI.FindAction("CloseMenu", throwIfNotFound: true);
@@ -548,6 +612,8 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_HighlightInteractables;
     private readonly InputAction m_Gameplay_Map;
     private readonly InputAction m_Gameplay_Inventory;
+    private readonly InputAction m_Gameplay_Time;
+    private readonly InputAction m_Gameplay_Character;
     public struct GameplayActions
     {
         private @GameInput m_Wrapper;
@@ -562,6 +628,8 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         public InputAction @HighlightInteractables => m_Wrapper.m_Gameplay_HighlightInteractables;
         public InputAction @Map => m_Wrapper.m_Gameplay_Map;
         public InputAction @Inventory => m_Wrapper.m_Gameplay_Inventory;
+        public InputAction @Time => m_Wrapper.m_Gameplay_Time;
+        public InputAction @Character => m_Wrapper.m_Gameplay_Character;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -601,6 +669,12 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Inventory.started += instance.OnInventory;
             @Inventory.performed += instance.OnInventory;
             @Inventory.canceled += instance.OnInventory;
+            @Time.started += instance.OnTime;
+            @Time.performed += instance.OnTime;
+            @Time.canceled += instance.OnTime;
+            @Character.started += instance.OnCharacter;
+            @Character.performed += instance.OnCharacter;
+            @Character.canceled += instance.OnCharacter;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -635,6 +709,12 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Inventory.started -= instance.OnInventory;
             @Inventory.performed -= instance.OnInventory;
             @Inventory.canceled -= instance.OnInventory;
+            @Time.started -= instance.OnTime;
+            @Time.performed -= instance.OnTime;
+            @Time.canceled -= instance.OnTime;
+            @Character.started -= instance.OnCharacter;
+            @Character.performed -= instance.OnCharacter;
+            @Character.canceled -= instance.OnCharacter;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -728,6 +808,8 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         void OnHighlightInteractables(InputAction.CallbackContext context);
         void OnMap(InputAction.CallbackContext context);
         void OnInventory(InputAction.CallbackContext context);
+        void OnTime(InputAction.CallbackContext context);
+        void OnCharacter(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
